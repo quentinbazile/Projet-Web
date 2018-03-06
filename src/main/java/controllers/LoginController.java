@@ -1,11 +1,16 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import modeles.DAO;
+import modeles.DAOException;
+import modeles.DataSourceFactory;
 
 public class LoginController extends HttpServlet {
 
@@ -16,9 +21,10 @@ public class LoginController extends HttpServlet {
 	 * @param response servlet response
 	 * @throws ServletException if a servlet-specific error occurs
 	 * @throws IOException if an I/O error occurs
+         * @throws modeles.DAOException
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+		throws ServletException, IOException, DAOException {
 		// Quelle action a appelé cette servlet ?
 		String action = request.getParameter("action");
 		if (null != action) {
@@ -61,7 +67,11 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+            try {
+                processRequest(request, response);
+            } catch (DAOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
@@ -75,7 +85,11 @@ public class LoginController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+            try {
+                processRequest(request, response);
+            } catch (DAOException ex) {
+                Logger.getLogger(LoginController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
@@ -88,24 +102,23 @@ public class LoginController extends HttpServlet {
 		return "Short description";
 	}// </editor-fold>
 
-	private void checkLogin(HttpServletRequest request) {
+	private void checkLogin(HttpServletRequest request) throws DAOException {
 		// Les paramètres transmis dans la requête
 		String loginParam = request.getParameter("loginParam");
 		String passwordParam = request.getParameter("passwordParam");
 
-		// Le login/password défini dans web.xml
-		String login = getInitParameter("login");
-		String password = getInitParameter("password");
-		String userName = getInitParameter("userName");
+                
+                DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-		if ((login.equals(loginParam) && (password.equals(passwordParam)))) {
+		if (dao.checkLogin(loginParam, passwordParam) == 1) {
 			// On a trouvé la combinaison login / password
 			// On stocke l'information dans la session
 			HttpSession session = request.getSession(true); // démarre la session
-			session.setAttribute("userName", userName);
+			session.setAttribute("userName", loginParam);
 		} else { // On positionne un message d'erreur pour l'afficher dans la JSP
 			request.setAttribute("errorMessage", "Login/Password incorrect");
 		}
+                System.out.println(dao.checkLogin(loginParam, passwordParam));
 	}
 
 	private void doLogout(HttpServletRequest request) {
