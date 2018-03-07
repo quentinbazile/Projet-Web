@@ -171,23 +171,27 @@ public class DAO {
 	}
     
      public boolean checkLogin(String login, String password) throws DAOException {
-
+         
+                boolean result = false;
+                
 		String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
+                
 		try (Connection connection = myDataSource.getConnection();
                     PreparedStatement stmt = connection.prepareStatement(sql)) {
+                    
+                    stmt.setString(1, login);
+                    stmt.setString(2, password);
 		
                     try (ResultSet rs = stmt.executeQuery()) {
-			if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-				// On récupère le champ NUMBER de l'enregistrement courant
-				return true;
-			}
+				rs.next(); // On a toujours exactement 1 enregistrement dans le résultat
+				result = true;
                     }
-		} catch (SQLException ex) {
+		}  catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
 			throw new DAOException(ex.getMessage());
 		}
 
-		return false;
+		return result;
 	}
     
      public void ajoutCommande (String order_num, String customer_id, String product_id, String quantity, String shipping_cost, String sales_date, String shipping_date, String freight_company) throws DAOException {

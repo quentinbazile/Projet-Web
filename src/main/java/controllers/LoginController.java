@@ -110,7 +110,7 @@ public class LoginController extends HttpServlet {
                 
                 DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-		if (dao.checkLogin(loginParam, passwordParam) == 1) {
+		if (dao.checkLogin(loginParam, passwordParam)) {
 			// On a trouvé la combinaison login / password
 			// On stocke l'information dans la session
 			HttpSession session = request.getSession(true); // démarre la session
