@@ -170,25 +170,98 @@ public class DAO {
 
 	}
     
-     public int checkLogin(String login, String password) throws DAOException {
-		int  result = 0;
+     public boolean checkLogin(String login, String password) throws DAOException {
 
 		String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
-		try (   Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-			Statement stmt = connection.createStatement(); // On crée un statement pour exécuter une requête
-			ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
-		) {
+		try (Connection connection = myDataSource.getConnection();
+                    PreparedStatement stmt = connection.prepareStatement(sql)) {
+		
+                    try (ResultSet rs = stmt.executeQuery()) {
 			if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
 				// On récupère le champ NUMBER de l'enregistrement courant
-				result += 1;
+				return true;
 			}
+                    }
 		} catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
 			throw new DAOException(ex.getMessage());
 		}
 
-		return result;
+		return false;
 	}
+    
+     public void ajoutCommande (String order_num, String customer_id, String product_id, String quantity, String shipping_cost, String sales_date, String shipping_date, String freight_company) throws DAOException {
+        String sql = "INSERT INTO purchase_order(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?)"; 
+        try (Connection connection = myDataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			ResultSet rs = pstmt.executeQuery(sql);
+        	   pstmt.setString(1, order_num); 
+        	   pstmt.setString(2, customer_id);
+                   pstmt.setString(3, product_id);
+                   pstmt.setString(4, quantity);
+                   pstmt.setString(5, shipping_cost);
+                   pstmt.setString(6, sales_date);
+                   pstmt.setString(7, shipping_date);
+                   pstmt.setString(8, freight_company);
+                   
+           int count = pstmt.executeUpdate();
+           		 
+           if(count == 0)
+        		throw new SQLException ("ERREUR: count = 0."); 
+           pstmt.close();
+        }
         
+        
+        catch (SQLException e) { 
+           System.err.println("Erreur lors de l'exécution de la requète SQL.");
+        }
 
+    }
+                 
+     public int deleteCommande (String order_num) throws DAOException {
+         
+        String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM= ?";
+		try (   Connection connection = myDataSource.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(sql)
+                ) {
+                        // Définir la valeur du paramètre
+			stmt.setString(1, order_num);
+			
+			return stmt.executeUpdate();
+
+		}  catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+	}
+     
+     public void updateCommande (String order_num, String customer_id, String product_id, String quantity, String shipping_cost, String sales_date, String shipping_date, String freight_company) throws DAOException {
+         
+        String sql = "UPDATE PURCHASE_ORDER SET order_num= ?, customer_id=?, product_id = ?, quantity = ?, shipping_cost= ?, sales_date= ?, shipping_date = ?, freight_company= ? ";
+         
+        try ( Connection connection = myDataSource.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement (sql) ) {
+            
+            int count;
+            for ( int i =0; i<10; i++) {
+               pstmt.setString(1, order_num); 
+               pstmt.setString(2, customer_id);
+               pstmt.setString(3, product_id);
+               pstmt.setString(4, quantity);
+               pstmt.setString(5, shipping_cost);
+               pstmt.setString(6, sales_date);
+               pstmt.setString(7, shipping_date);
+               pstmt.setString(8, freight_company); 
+               count = pstmt.executeUpdate ();
+            }
+        }  catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+            
+     }
+     } 
 }
+
+     
+
+
