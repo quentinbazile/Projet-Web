@@ -105,9 +105,14 @@ public class LoginController extends HttpServlet {
 	private void checkLogin(HttpServletRequest request) throws DAOException {
 		// Les paramètres transmis dans la requête
 		String loginParam = request.getParameter("loginParam");
-		String passwordParam = request.getParameter("passwordParam");
-
-                
+                int passwordParam;
+                try {
+                    passwordParam = Integer.parseInt(request.getParameter("passwordParam"));
+                }
+                catch(NumberFormatException nfe){ 
+                    passwordParam = 0;
+                }
+   
                 DAO dao = new DAO(DataSourceFactory.getDataSource());
 
 		if (dao.checkLogin(loginParam, passwordParam)) {

@@ -170,7 +170,7 @@ public class DAO {
 
 	}
     
-     public boolean checkLogin(String login, String password) throws DAOException {
+     public boolean checkLogin(String login, int password) throws DAOException {
          
                 boolean result = false;
                 
@@ -180,11 +180,11 @@ public class DAO {
                     PreparedStatement stmt = connection.prepareStatement(sql)) {
                     
                     stmt.setString(1, login);
-                    stmt.setString(2, password);
+                    stmt.setInt(2, password);
 		
                     try (ResultSet rs = stmt.executeQuery()) {
-				rs.next(); // On a toujours exactement 1 enregistrement dans le résultat
-				result = true;
+			if (rs.next())
+                            result = true;
                     }
 		}  catch (SQLException ex) {
 			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
