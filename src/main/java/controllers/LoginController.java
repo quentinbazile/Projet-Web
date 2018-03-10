@@ -29,7 +29,7 @@ public class LoginController extends HttpServlet {
 		String action = request.getParameter("action");
 		if (null != action) {
 			switch (action) {
-				case "login":
+				case "Sign In":
 					checkLogin(request);
 					break;
 				case "logout":
@@ -120,8 +120,6 @@ public class LoginController extends HttpServlet {
 			// On stocke l'information dans la session
 			HttpSession session = request.getSession(true); // démarre la session
 			session.setAttribute("userName", loginParam);
-		} else { // On positionne un message d'erreur pour l'afficher dans la JSP
-			request.setAttribute("errorMessage", "Login/Password incorrect");
 		}
                 System.out.println(dao.checkLogin(loginParam, passwordParam));
 	}
