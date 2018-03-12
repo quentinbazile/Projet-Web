@@ -5,19 +5,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Please login</title>
+        <title>Bienvenue</title>
         <link rel="stylesheet" href="<c:url value="views/css/login.css"/>">
+        <link href="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700" rel="stylesheet">
     </head>
     <body background="<c:url value='views/images/bg.jpg'/>">
         <div class="loginBox">
             <img src="<c:url value="views/images/user.png"/>" class="user">
-            <h2>Log In Here</h2>
+            <h2>Connectez-vous</h2>
             <form action="<c:url value="/" />" method="POST">
-                <p>Email</p>
-                <input type='email' name='loginParam' placeholder='Enter Email' required>
-                <p>Password</p>
+                <p>Adresse email</p>
+                <input type='email' name='loginParam' placeholder='email' required>
+                <p>Mot de passe</p>
                 <input type='password' name='passwordParam' placeholder='••••••' required>
-                <input type='submit' name='action' value='Sign In'>
+                <input type='submit' name='action' value='Connexion'>
             </form>
         </div>
     </body>

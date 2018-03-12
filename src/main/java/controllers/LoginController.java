@@ -29,7 +29,7 @@ public class LoginController extends HttpServlet {
 		String action = request.getParameter("action");
 		if (null != action) {
 			switch (action) {
-				case "Sign In":
+				case "Connexion":
 					checkLogin(request);
 					break;
 				case "logout":
