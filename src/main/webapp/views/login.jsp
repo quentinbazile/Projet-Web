@@ -8,7 +8,7 @@
         <title>Please login</title>
         <link rel="stylesheet" href="<c:url value="views/css/login.css"/>">
     </head>
-    <body background="<c:url value='views/images/bg.jpg'/>">
+    <body background="<c:url value='views/images/bgd.jpg'/>">
         <div class="loginBox">
             <img src="<c:url value="views/images/user.png"/>" class="user">
             <h2>Log In Here</h2>
