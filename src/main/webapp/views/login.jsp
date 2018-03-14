@@ -6,10 +6,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Bienvenue</title>
-        <link rel="stylesheet" href="<c:url value="views/css/login-v2.css"/>">
+        <link rel="stylesheet" href="<c:url value="views/css/login.css"/>">
         <link rel="stylesheet" href="<c:url value="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700"/>">
     </head>
-    <body background="<c:url value='views/images/bgd.jpg'/>">
+    <body background="<c:url value='views/images/bg.jpg'/>">
         <div class="loginBox">
             <img src="<c:url value="views/images/lock.png"/>" class="lock">
             <h2>Connectez-vous</h2>
