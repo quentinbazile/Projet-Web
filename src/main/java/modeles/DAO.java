@@ -5,6 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -193,20 +196,63 @@ public class DAO {
 
 		return result;
 	}
+     
+     public List<ProductEntity> listeProduits () throws DAOException {
+             List<ProductEntity> result = new LinkedList<>(); // Liste vIde
+             String sql = "SELECT * FROM PRODUCT";
+		try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+			Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
+			
+
+			
+
+                        try (ResultSet rs = stmt.executeQuery()) {
+				while (rs.next()) { // Tant qu'il y a des enregistrements
+					// On récupère les champs nécessaires de l'enregistrement courant
+					int product_id = rs.getInt("PRODUCT_ID");
+					float purchase_order = rs.getFloat("PURSCHASE_ORDER");
+					int quantity_on_hand = rs.getInt("QUANTITY_ON_HAND");
+                                        float markup = rs.getFloat("MARKUP");
+                                        String available = rs.getString("AVAILABLE");
+                                        String description = rs.getString("DESCRIPTION");
+                                        int manufacturer_id = rs.getInt("MANUFACTURER_ID");
+                                        String product_code = rs.getString("PRODUCT_CODE");
+					// On crée l'objet entité
+					ProductEntity p = new ProductEntity(product_id, purchase_order, quantity_on_hand, markup, available, description, manufacturer_id, product_code);
+                                        
+					// On l'ajoute à la liste des résultats
+					result.add(p);
+				}
+			}
+		}  catch (SQLException ex) {
+			Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+			throw new DAOException(ex.getMessage());
+		}
+
+		return result;
+
+             
+     
+             
+             
+             
+     }
     
-     public void ajoutCommande (String order_num, String customer_id, String product_id, String quantity, String shipping_cost, String sales_date, String shipping_date, String freight_company) throws DAOException {
-        String sql = "INSERT INTO purchase_order(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?)"; 
+     public void ajoutCommande (int customer_id, int product_id, int quantity, String freight_company) throws DAOException {
+        float shipping_cost = 2*quantity;
+        Date actuelle = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        String sales_date = dateFormat.format(actuelle);
+        String shipping_date = sales_date;
+        
+        String sql = "INSERT INTO purchase_order(customer_id, product_id, quantity," + shipping_cost + ", " + sales_date + ", " + shipping_date + " , freight_company) VALUES(?, ?, ?, ?, ?, ?)"; 
         try (Connection connection = myDataSource.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			ResultSet rs = pstmt.executeQuery(sql);
-        	   pstmt.setString(1, order_num); 
-        	   pstmt.setString(2, customer_id);
-                   pstmt.setString(3, product_id);
-                   pstmt.setString(4, quantity);
-                   pstmt.setString(5, shipping_cost);
-                   pstmt.setString(6, sales_date);
-                   pstmt.setString(7, shipping_date);
-                   pstmt.setString(8, freight_company);
+        	   pstmt.setInt(1, customer_id);
+                   pstmt.setInt(2, product_id);
+                   pstmt.setInt(3, quantity);
+                   pstmt.setString(4, freight_company);
                    
            int count = pstmt.executeUpdate();
            		 
