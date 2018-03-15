@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -205,20 +205,18 @@ public class DAO {
         return result;
     }
 
-    public int ajoutCommande(int customer_id, int product_id, int quantity, String freight_company) throws DAOException {
+    public int ajoutCommande(int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
         int result = 0;
-        float shipping_cost = 2 * quantity;
-        Date actuelle = new Date();
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        String sales_date = dateFormat.format(actuelle);
-        String shipping_date = sales_date;
-        String sql = "INSERT INTO purchase_order(customer_id, product_id, quantity," + shipping_cost + ", " + sales_date + ", " + shipping_date + " , freight_company) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PURCHASE_ORDER(customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, customer_id);
             pstmt.setInt(2, product_id);
             pstmt.setInt(3, quantity);
-            pstmt.setString(4, freight_company);
+            pstmt.setFloat(4, shipping_cost);
+            pstmt.setDate(5, sales_date);
+            pstmt.setDate(6, shipping_date);
+            pstmt.setString(7, freight_company);
             result = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -228,8 +226,7 @@ public class DAO {
     }
 
     public int deleteCommande(String order_num) throws DAOException {
-
-        String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM= ?";
+        String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             // Définir la valeur du paramètre
@@ -241,29 +238,25 @@ public class DAO {
         }
     }
 
-    public void updateCommande(String order_num, String customer_id, String product_id, String quantity, String shipping_cost, String sales_date, String shipping_date, String freight_company) throws DAOException {
+    public void updateCommande(int order_num, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
 
-        String sql = "UPDATE PURCHASE_ORDER SET order_num= ?, customer_id=?, product_id = ?, quantity = ?, shipping_cost= ?, sales_date= ?, shipping_date = ?, freight_company= ? ";
+        String sql = "UPDATE PURCHASE_ORDER SET product_id = ?, quantity = ?, shipping_cost = ?, sales_date = ?, shipping_date = ?, freight_company = ? WHERE order_num = ?";
 
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-
-            int count;
             for (int i = 0; i < 10; i++) {
-                pstmt.setString(1, order_num);
-                pstmt.setString(2, customer_id);
-                pstmt.setString(3, product_id);
-                pstmt.setString(4, quantity);
-                pstmt.setString(5, shipping_cost);
-                pstmt.setString(6, sales_date);
-                pstmt.setString(7, shipping_date);
-                pstmt.setString(8, freight_company);
-                count = pstmt.executeUpdate();
+                pstmt.setInt(1, product_id);
+                pstmt.setInt(2, quantity);
+                pstmt.setFloat(3, shipping_cost);
+                pstmt.setDate(4, sales_date);
+                pstmt.setDate(5, shipping_date);
+                pstmt.setString(6, freight_company);
+                pstmt.setInt(7, order_num);
+                pstmt.executeUpdate();
             }
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
-
         }
     }
 }
