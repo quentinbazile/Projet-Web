@@ -23,7 +23,7 @@ public class DAOTest {
         myDataSource = DataSourceFactory.getDataSource();
         myDAO = new DAO(myDataSource);
     }
-
+    
     @Test
     public void testAjoutCommande() throws DAOException {
         int order_num = myDAO.orderNum() + 1;
@@ -35,6 +35,23 @@ public class DAOTest {
         Date sales_date = new Date(System.currentTimeMillis());
         Date shipping_date = sales_date;
         assertEquals(1, myDAO.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company));
+    }
+
+    @Test
+    public void testUpdateCommande() throws DAOException {
+        int product_id = 980005;
+        int quantity = 50;
+        float shipping_cost = 30;
+        Date sales_date = new Date(System.currentTimeMillis());
+        String freight_company = "We deliver";
+        int order_num = 30298005;
+        assertEquals(1, myDAO.updateCommande(product_id, quantity, shipping_cost, sales_date, freight_company, order_num));
+    }
+    
+    @Test
+    public void testDeleteCommande() throws DAOException {
+        int order_num = 30298005;
+        assertEquals(1, myDAO.deleteCommande(order_num));
     }
 
 }

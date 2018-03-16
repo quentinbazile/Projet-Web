@@ -204,7 +204,7 @@ public class DAO {
         }
         return result;
     }
-    
+
     public int orderNum() throws DAOException {
         int result = 0;
         String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
@@ -245,37 +245,35 @@ public class DAO {
     }
 
     public int deleteCommande(int order_num) throws DAOException {
+        int result = 0;
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
-            // Définir la valeur du paramètre
             stmt.setInt(1, order_num);
-            return stmt.executeUpdate();
+            result = stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+        return result;
     }
 
-    public void updateCommande(int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company, int order_num) throws DAOException {
-
-        String sql = "UPDATE PURCHASE_ORDER SET product_id = ?, quantity = ?, shipping_cost = ?, sales_date = ?, shipping_date = ?, freight_company = ? WHERE order_num = ?";
-
+    public int updateCommande(int product_id, int quantity, float shipping_cost, Date sales_date, String freight_company, int order_num) throws DAOException {
+        int result = 0;
+        String sql = "UPDATE PURCHASE_ORDER SET product_id = ?, quantity = ?, shipping_cost = ?, sales_date = ?, freight_company = ? WHERE order_num = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            for (int i = 0; i < 10; i++) {
-                pstmt.setInt(1, product_id);
-                pstmt.setInt(2, quantity);
-                pstmt.setFloat(3, shipping_cost);
-                pstmt.setDate(4, sales_date);
-                pstmt.setDate(5, shipping_date);
-                pstmt.setString(6, freight_company);
-                pstmt.setInt(7, order_num);
-                pstmt.executeUpdate();
-            }
+            pstmt.setInt(1, product_id);
+            pstmt.setInt(2, quantity);
+            pstmt.setFloat(3, shipping_cost);
+            pstmt.setDate(4, sales_date);
+            pstmt.setString(5, freight_company);
+            pstmt.setInt(6, order_num);
+            result = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
         }
+        return result;
     }
 }
