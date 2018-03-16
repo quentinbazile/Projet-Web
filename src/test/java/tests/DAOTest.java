@@ -26,6 +26,7 @@ public class DAOTest {
 
     @Test
     public void testAjoutCommande() throws DAOException {
+        int order_num = myDAO.orderNum() + 1;
         int customer_id = 1;
         int product_id = 980005;
         int quantity = 15;
@@ -33,7 +34,7 @@ public class DAOTest {
         float shipping_cost = 2 * quantity;
         Date sales_date = new Date(System.currentTimeMillis());
         Date shipping_date = sales_date;
-        assertEquals(1, myDAO.ajoutCommande(customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company));
+        assertEquals(1, myDAO.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company));
     }
 
 }

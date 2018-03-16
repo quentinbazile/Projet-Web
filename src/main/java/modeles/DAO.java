@@ -204,19 +204,38 @@ public class DAO {
         }
         return result;
     }
-
-    public int ajoutCommande(int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
+    
+    public int orderNum() throws DAOException {
         int result = 0;
-        String sql = "INSERT INTO PURCHASE_ORDER(customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                Statement stmt = connection.createStatement(); // On crée un statement pour exécuter une requête
+                ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
+                ) {
+            if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
+                // On récupère le champ NUMBER de l'enregistrement courant
+                result = rs.getInt("ORDER_NUM");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
+        }
+        return result;
+    }
+
+    public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
+        int result = 0;
+        String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, customer_id);
-            pstmt.setInt(2, product_id);
-            pstmt.setInt(3, quantity);
-            pstmt.setFloat(4, shipping_cost);
-            pstmt.setDate(5, sales_date);
-            pstmt.setDate(6, shipping_date);
-            pstmt.setString(7, freight_company);
+            pstmt.setInt(1, order_num);
+            pstmt.setInt(2, customer_id);
+            pstmt.setInt(3, product_id);
+            pstmt.setInt(4, quantity);
+            pstmt.setFloat(5, shipping_cost);
+            pstmt.setDate(6, sales_date);
+            pstmt.setDate(7, shipping_date);
+            pstmt.setString(8, freight_company);
             result = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -225,12 +244,12 @@ public class DAO {
         return result;
     }
 
-    public int deleteCommande(String order_num) throws DAOException {
+    public int deleteCommande(int order_num) throws DAOException {
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             // Définir la valeur du paramètre
-            stmt.setString(1, order_num);
+            stmt.setInt(1, order_num);
             return stmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
@@ -238,7 +257,7 @@ public class DAO {
         }
     }
 
-    public void updateCommande(int order_num, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
+    public void updateCommande(int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company, int order_num) throws DAOException {
 
         String sql = "UPDATE PURCHASE_ORDER SET product_id = ?, quantity = ?, shipping_cost = ?, sales_date = ?, shipping_date = ?, freight_company = ? WHERE order_num = ?";
 
