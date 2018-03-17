@@ -39,19 +39,19 @@ public class DAOTest {
 
     @Test
     public void testUpdateCommande() throws DAOException {
-        int product_id = 980005;
-        int quantity = 50;
-        float shipping_cost = 30;
+        int product_id = 980031;
+        int quantity = 400;
+        float shipping_cost = 400.00f;
         Date sales_date = new Date(System.currentTimeMillis());
-        String freight_company = "We deliver";
-        int order_num = 30298005;
-        assertEquals(1, myDAO.updateCommande(product_id, quantity, shipping_cost, sales_date, freight_company, order_num));
+        String freight_company = "FR Express";
+        int order_num = 40000000;
+        assertEquals(0, myDAO.updateCommande(product_id, quantity, shipping_cost, sales_date, freight_company, order_num));
     }
     
     @Test
     public void testDeleteCommande() throws DAOException {
-        int order_num = 30298005;
-        assertEquals(1, myDAO.deleteCommande(order_num));
+        int order_num = 40000000;
+        assertEquals(0, myDAO.deleteCommande(order_num));
     }
-
+    
 }
