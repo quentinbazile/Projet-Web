@@ -79,7 +79,7 @@
     </head>
     <body>
         <h1>Liste des produits</h1>
-         <!-- La zone où les résultats vont s'afficher -->
+        <!-- La zone où les résultats vont s'afficher -->
         <div id="products"></div>
 
         <!-- Le template qui sert à formatter la liste des produits -->
@@ -107,14 +107,14 @@
         <script id="ordersTemplate" type="text/template">
             <TABLE>
                 <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Date d'achat</th><th>Date d'expédition</th>
-                    <th>Compagnie de transport</th><th>Action</th>
+                    <th>Compagnie de transport</th><th>Action</th><th>Annulation</th>
                 </tr>
                 {{! Pour chaque enregistrement }}
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD>
-                        <TD>{{freight_company}}</TD><TD><button>Supprimer</button></TD>
+                        <TD>{{freight_company}}</TD><TD><button>Modifier</button><TD><button>Supprimer</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
