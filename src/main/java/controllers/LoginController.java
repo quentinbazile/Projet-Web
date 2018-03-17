@@ -15,6 +15,7 @@ import modeles.DataSourceFactory;
 public class LoginController extends HttpServlet {
     
     protected static String userName;
+    protected static int passwordParam;
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -107,7 +108,7 @@ public class LoginController extends HttpServlet {
 	private void checkLogin(HttpServletRequest request) throws DAOException {
 		// Les paramètres transmis dans la requête
 		String loginParam = request.getParameter("loginParam");
-                int passwordParam;
+                // int passwordParam;
                 try {
                     passwordParam = Integer.parseInt(request.getParameter("passwordParam"));
                 }
@@ -138,5 +139,4 @@ public class LoginController extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		return (session == null) ? null : (String) session.getAttribute("userName");
 	}
-
 }

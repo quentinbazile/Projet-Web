@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Edition des taux de remise (AJAX)</title>
+        <title>Gestion des commandes</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <!-- On charge jQuery -->
         <script	src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -51,6 +51,22 @@
                             }
                 });
             }
+            
+            // Ajouter une commande
+            function addCommande(product_id) {
+                $.ajax({
+                    url: "addCommande",
+                    data: {"product_id": product_id},
+                    dataType: "json",
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                showOrders();
+                                console.log(result);
+                            },
+                    error: showError
+                });
+                return false;
+            }
 
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
@@ -69,14 +85,17 @@
         <!-- Le template qui sert à formatter la liste des produits -->
         <script id="productsTemplate" type="text/template">
             <TABLE>
-            <tr><th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Marquage</th><th>Description</th><th>Action</th></tr>
-            {{! Pour chaque enregistrement }}
-            {{#records}}
-                {{! Une ligne dans la table }}
-                <TR>
-                    <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD><TD><button>Commander</button></TD>
-                </TR>
-            {{/records}}
+                <tr>
+                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Marquage</th><th>Description</th><th>Action</th>
+                </tr>
+                {{! Pour chaque enregistrement }}
+                {{#records}}
+                    {{! Une ligne dans la table }}
+                    <TR>
+                        <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
+                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
+                    </TR>
+                {{/records}}
             </TABLE>
         </script>
         
@@ -87,14 +106,17 @@
         <!-- Le template qui sert à formatter la liste des commandes -->
         <script id="ordersTemplate" type="text/template">
             <TABLE>
-            <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Date d'achat</th><th>Date d'expédition</th><th>Compagnie de transport</th><th>Action</th></tr>
-            {{! Pour chaque enregistrement }}
-            {{#records}}
-                {{! Une ligne dans la table }}
-                <TR>
-                    <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD><TD><button>Supprimer</button></TD>
-                </TR>
-            {{/records}}
+                <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Date d'achat</th><th>Date d'expédition</th>
+                    <th>Compagnie de transport</th><th>Action</th>
+                </tr>
+                {{! Pour chaque enregistrement }}
+                {{#records}}
+                    {{! Une ligne dans la table }}
+                    <TR>
+                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD>
+                        <TD>{{freight_company}}</TD><TD><button>Supprimer</button></TD>
+                    </TR>
+                {{/records}}
             </TABLE>
         </script>
     </body>
