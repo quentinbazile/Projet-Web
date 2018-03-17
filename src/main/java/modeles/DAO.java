@@ -177,7 +177,7 @@ public class DAO {
 
     public List<ProductEntity> listeProduits() throws SQLException {
         List<ProductEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PRODUCT ORDER BY DESCRIPTION";
+        String sql = "SELECT * FROM PRODUCT ORDER BY DESCRIPTION WHERE QUANTITY_ON_HAND > 0";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
             ResultSet rs = stmt.executeQuery(sql); // Un ResultSet pour parcourir les enregistrements du résultat
@@ -187,12 +187,12 @@ public class DAO {
                 float purchase_cost = rs.getFloat("PURCHASE_COST");
                 int quantity_on_hand = rs.getInt("QUANTITY_ON_HAND");
                 float markup = rs.getFloat("MARKUP");
-                String available = rs.getString("AVAILABLE");
+               // String available = rs.getString("AVAILABLE");
                 String description = rs.getString("DESCRIPTION");
-                int manufacturer_id = rs.getInt("MANUFACTURER_ID");
-                String product_code = rs.getString("PRODUCT_CODE");
+               // int manufacturer_id = rs.getInt("MANUFACTURER_ID");
+               // String product_code = rs.getString("PRODUCT_CODE");
                 // On crée l'objet entité
-                ProductEntity p = new ProductEntity(product_id, purchase_cost, quantity_on_hand, markup, available, description, manufacturer_id, product_code);
+                ProductEntity p = new ProductEntity(product_id, purchase_cost, quantity_on_hand, markup, description);
                 // On l'ajoute à la liste des résultats
                 result.add(p);
             }
