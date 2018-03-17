@@ -2,8 +2,6 @@ package controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,12 +17,9 @@ import java.util.Properties;
 import modeles.DAO;
 import modeles.DataSourceFactory;
 
-/**
- *
- * @author rbastide
- */
-@WebServlet(name = "codesInJSON", urlPatterns = {"/listeProduits"})
-public class ListCodesJsonServlet extends HttpServlet {
+
+@WebServlet(name = "productsInJSON", urlPatterns = {"/listeProduits"})
+public class JsonListeProduitsController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
