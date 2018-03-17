@@ -175,7 +175,7 @@ public class DAO {
         return result;
     }
 
-    public List<ProductEntity> listeProduits() throws DAOException {
+    public List<ProductEntity> listeProduits() throws SQLException {
         List<ProductEntity> result = new LinkedList<>(); // Liste vIde
         String sql = "SELECT * FROM PRODUCT ORDER BY DESCRIPTION";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
@@ -196,10 +196,7 @@ public class DAO {
                 // On l'ajoute à la liste des résultats
                 result.add(p);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            throw new DAOException(ex.getMessage());
-        }
+        } 
         return result;
     }
 

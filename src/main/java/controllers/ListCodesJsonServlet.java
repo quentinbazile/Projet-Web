@@ -23,7 +23,7 @@ import modeles.DataSourceFactory;
  *
  * @author rbastide
  */
-@WebServlet(name = "codesInJSON", urlPatterns = {"/allCodes"})
+@WebServlet(name = "codesInJSON", urlPatterns = {"/listeProduits"})
 public class ListCodesJsonServlet extends HttpServlet {
 
 	/**
@@ -42,7 +42,7 @@ public class ListCodesJsonServlet extends HttpServlet {
 
 		Properties resultat = new Properties();
 		try {
-			resultat.put("records", dao.allCodes());
+			resultat.put("records", dao.listeProduits());
 		} catch (SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resultat.put("records", Collections.EMPTY_LIST);
