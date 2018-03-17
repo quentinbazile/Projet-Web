@@ -184,7 +184,7 @@ public class DAO {
             while (rs.next()) { // Tant qu'il y a des enregistrements
                 // On récupère les champs nécessaires de l'enregistrement courant
                 int product_id = rs.getInt("PRODUCT_ID");
-                float purchase_order = rs.getFloat("PURSCHASE_ORDER");
+                float purchase_cost = rs.getFloat("PURCHASE_COST");
                 int quantity_on_hand = rs.getInt("QUANTITY_ON_HAND");
                 float markup = rs.getFloat("MARKUP");
                 String available = rs.getString("AVAILABLE");
@@ -192,7 +192,7 @@ public class DAO {
                 int manufacturer_id = rs.getInt("MANUFACTURER_ID");
                 String product_code = rs.getString("PRODUCT_CODE");
                 // On crée l'objet entité
-                ProductEntity p = new ProductEntity(product_id, purchase_order, quantity_on_hand, markup, available, description, manufacturer_id, product_code);
+                ProductEntity p = new ProductEntity(product_id, purchase_cost, quantity_on_hand, markup, available, description, manufacturer_id, product_code);
                 // On l'ajoute à la liste des résultats
                 result.add(p);
             }
