@@ -10,8 +10,9 @@
         <script>
             $(document).ready(// Exécuté à la fin du chargement de la page
                     function () {
-                        // On montre la liste des produits
+                        // On montre la liste des produits et des commandes
                         showProducts();
+                        showOrders();
                     }
             );
 
@@ -32,6 +33,24 @@
                             }
                 });
             }
+            
+            function showOrders() {
+                // On fait un appel AJAX pour chercher les produits
+                $.ajax({
+                    url: "listeCommandes",
+                    dataType: "json",
+                    error: showError,
+                    success: // La fonction qui traite les résultats
+                            function (result) {
+                                // Le code source du template est dans la page
+                                var template = $('#ordersTemplate').html();
+                                // On combine le template avec le résultat de la requête
+                                var processedTemplate = Mustache.to_html(template, result);
+                                // On affiche la liste des options dans le select
+                                $('#orders').html(processedTemplate);
+                            }
+                });
+            }
 
             // Fonction qui traite les erreurs de la requête
             function showError(xhr, status, message) {
@@ -43,6 +62,7 @@
         <link rel="stylesheet" type="text/css" href="views/css/table.css"> 
     </head>
     <body>
+        <h1>Liste des produits</h1>
          <!-- La zone où les résultats vont s'afficher -->
         <div id="products"></div>
 
@@ -55,6 +75,24 @@
                 {{! Une ligne dans la table }}
                 <TR>
                     <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD><TD><button>Commander</button></TD>
+                </TR>
+            {{/records}}
+            </TABLE>
+        </script>
+        
+        <h1>Mes commandes</h1>
+        <!-- La zone où les résultats vont s'afficher -->
+        <div id="orders"></div>
+
+        <!-- Le template qui sert à formatter la liste des commandes -->
+        <script id="ordersTemplate" type="text/template">
+            <TABLE>
+            <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Date d'achat</th><th>Date d'expédition</th><th>Compagnie de transport</th><th>Action</th></tr>
+            {{! Pour chaque enregistrement }}
+            {{#records}}
+                {{! Une ligne dans la table }}
+                <TR>
+                    <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD><TD><button>Supprimer</button></TD>
                 </TR>
             {{/records}}
             </TABLE>

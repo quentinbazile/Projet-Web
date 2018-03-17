@@ -187,14 +187,41 @@ public class DAO {
                 float purchase_cost = rs.getFloat("PURCHASE_COST");
                 int quantity_on_hand = rs.getInt("QUANTITY_ON_HAND");
                 float markup = rs.getFloat("MARKUP");
-               // String available = rs.getString("AVAILABLE");
+                String available = rs.getString("AVAILABLE");
                 String description = rs.getString("DESCRIPTION");
-               // int manufacturer_id = rs.getInt("MANUFACTURER_ID");
-               // String product_code = rs.getString("PRODUCT_CODE");
+                int manufacturer_id = rs.getInt("MANUFACTURER_ID");
+                String product_code = rs.getString("PRODUCT_CODE");
                 // On crée l'objet entité
-                ProductEntity p = new ProductEntity(product_id, purchase_cost, quantity_on_hand, markup, description);
+                ProductEntity p = new ProductEntity(product_id, purchase_cost, quantity_on_hand, markup, available, description, manufacturer_id, product_code);
                 // On l'ajoute à la liste des résultats
                 result.add(p);
+            }
+        } 
+        return result;
+    }
+    
+    public List<PurchaseOrderEntity> listeCommandes(String userName) throws SQLException {
+        List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vIde
+        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) WHERE EMAIL = ?";
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
+            pstmt.setString(1, userName);
+            try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
+                while (rs.next()) { // Tant qu'il y a des enregistrements
+                    // On récupère les champs nécessaires de l'enregistrement courant
+                    int order_num = rs.getInt("ORDER_NUM");
+                    int quantity = rs.getInt("QUANTITY");
+                    float shipping_cost = rs.getFloat("SHIPPING_COST");
+                    Date sales_date = rs.getDate("SALES_DATE");
+                    Date shipping_date = rs.getDate("SHIPPING_DATE");
+                    String freight_company = rs.getString("FREIGHT_COMPANY");
+                    int customer_id = rs.getInt("CUSTOMER_ID");
+                    int product_id = rs.getInt("PRODUCT_ID");
+                    // On crée l'objet entité
+                    PurchaseOrderEntity o = new PurchaseOrderEntity(order_num, quantity, shipping_cost, sales_date, shipping_date, freight_company, customer_id, product_id);
+                    // On l'ajoute à la liste des résultats
+                    result.add(o);
+                }
             }
         } 
         return result;

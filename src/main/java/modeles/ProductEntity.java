@@ -14,20 +14,20 @@ public class ProductEntity {
     private float purchase_cost;
     private int quantity_on_hand;
     private float markup;
-    //private String available;
+    private String available;
     private String description;
-    //private int manufacturer_id;
-    //private String product_code;
+    private int manufacturer_id;
+    private String product_code;
 
-    public ProductEntity(int product_id, float purchase_cost, int quantity_on_hand, float markup, String description) {
+    public ProductEntity(int product_id, float purchase_cost, int quantity_on_hand, float markup, String available, String description, int manufacturer_id, String product_code) {
         this.product_id = product_id;
         this.purchase_cost = purchase_cost;
         this.quantity_on_hand = quantity_on_hand;
         this.markup = markup;
-       // this.available = available;
+        this.available = available;
         this.description = description;
-       // this.manufacturer_id = manufacturer_id;
-       // this.product_code = product_code;
+        this.manufacturer_id = manufacturer_id;
+        this.product_code = product_code;
     }
 
     public int getProduct_id() {
@@ -50,7 +50,7 @@ public class ProductEntity {
         return description;
     }
 
-    /*public String getAvailable() {
+    public String getAvailable() {
         return available;
     }
 
@@ -60,7 +60,5 @@ public class ProductEntity {
 
     public String getProduct_code() {
         return product_code;
-    }
-    */
-    
+    }  
 }

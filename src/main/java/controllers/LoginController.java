@@ -13,6 +13,8 @@ import modeles.DAOException;
 import modeles.DataSourceFactory;
 
 public class LoginController extends HttpServlet {
+    
+    protected static String userName;
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,7 +42,7 @@ public class LoginController extends HttpServlet {
 
 		// Est-ce que l'utilisateur est connecté ?
 		// On cherche l'attribut userName dans la session
-		String userName = findUserInSession(request);
+		userName = findUserInSession(request);
 		String jspView;
 		if (null == userName) { // L'utilisateur n'est pas connecté
 			// On choisit la page de login
