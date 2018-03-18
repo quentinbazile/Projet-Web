@@ -93,7 +93,7 @@
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
+                        <TD><button id="btnOrder" onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
