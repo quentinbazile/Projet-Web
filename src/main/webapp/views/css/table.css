@@ -48,15 +48,6 @@ td:hover{
   background-color: #4FF94F;
 }
 
-td:last-child { 
-    border-bottom: none;
-}
-
-#btn {
-    margin-top:1px;
-    margin-bottom:1px;
-}
-
 h1 {
     color: white;
     margin-left:34%;
