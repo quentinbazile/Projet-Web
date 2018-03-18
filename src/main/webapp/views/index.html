@@ -31,7 +31,9 @@
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        <TD></TD><TD></TD><TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
+                        <TD><input id="qte" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
+                        <TD>à développer</TD>
+                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
@@ -52,7 +54,7 @@
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD>
-                        <TD>{{freight_company}}</TD><TD><button id="btn">Modifier</button><TD><button id="btn">Supprimer</button></TD>
+                        <TD>{{freight_company}}</TD><TD><button class="btn">Modifier</button><TD><button class="btn">Supprimer</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>

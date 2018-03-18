@@ -38,18 +38,18 @@ public class JsonAddCommandeController extends HttpServlet {
             
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
                 
+                int quantity = 1;
+                int product_id = Integer.parseInt(request.getParameter("product_id"));
+                String freight_company = "We deliver";
+		String message;
+                
 		int order_num = dao.orderNum() + 1;
 		int customer_id = LoginController.passwordParam;
-                int quantity = 1;
                 float shipping_cost = 2 * quantity;
                 Date sales_date = new Date(System.currentTimeMillis());
                 Date shipping_date = sales_date;
-                
-                String product_id = request.getParameter("product_id");
-                String freight_company = "We deliver";
-		String message;
 		
-		dao.ajoutCommande(order_num, customer_id, Integer.parseInt(product_id), quantity, shipping_cost, sales_date, shipping_date, freight_company);
+		dao.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company);
                 message = String.format("Commande %s ajoutée", order_num);
 
 		Properties resultat = new Properties();
