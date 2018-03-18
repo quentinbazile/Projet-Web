@@ -2,6 +2,7 @@ body {
     width:50%;
     margin: 0 auto;
     background: url("../images/bg4.jpg") fixed;
+    margin-top:2%;
 }
 
 table {
@@ -70,4 +71,19 @@ button{
 }
 button:hover{
     color: white; 
+}
+
+input[type=submit]{
+    background: #424242;
+    box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold; 
+    height: 25px;
+    cursor:pointer;
+    margin-left:43.5%;
+}
+
+input[type=submit]:hover{
+     color: red; 
 }
