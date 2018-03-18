@@ -60,6 +60,11 @@ h1 {
     margin-bottom: 8%;
 }
 
+#products{
+    width: 1500px;
+    margin-left:-17%;
+}
+
 button{
     background: gold;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);

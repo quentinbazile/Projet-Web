@@ -24,14 +24,14 @@
         <script id="productsTemplate" type="text/template">
             <TABLE>
                 <tr>
-                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Marquage</th><th>Description</th><th>Action</th>
+                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Marquage</th><th>Description</th><th>Nombre</th><th>Compagnie de transport</th><th>Action</th>
                 </tr>
                 {{! Pour chaque enregistrement }}
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
+                        <TD></TD><TD></TD><TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
