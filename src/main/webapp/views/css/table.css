@@ -1,11 +1,13 @@
 body {
-    width:750px;
+    width:50%;
     margin: 0 auto;
+    background: url("../images/bg4.jpg") fixed;
 }
 
 table {
   font-family: verdana, arial, sans-serif;
   font-size: 11px;
+  font-weight: bold;
   color: #333333;
   border-width: 1px;
   border-color: #666666;
@@ -14,15 +16,17 @@ table {
   z-index: 1;
 }
 
-th {
-  background-color: #dedede;
-}
-
 th, td {
   border: 1px solid #666666;
   padding: 8px;
   cursor: pointer;
   position: relative;
+  background-color: rgba(255, 255, 255, .5);
+}
+
+th {
+  font-size: 13px;
+  background-color: rgba(255, 255, 255, .75);
 }
 
 tr:hover{
@@ -41,14 +45,37 @@ td:hover::after {
 }
 
 td:hover{
-  background-color: #DA7777;
+  background-color: #4FF94F;
 }
 
 td:last-child { 
     border-bottom: none;
 }
 
-#btnOrder {
+#btn {
     margin-top:1px;
     margin-bottom:1px;
+}
+
+h1 {
+    color: white;
+    margin-left:34%;
+}
+
+#orders{
+    width: 1500px;
+    margin-left:-25%;
+}
+
+button{
+    background: gold;
+    box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold; 
+    height: 25px;
+    cursor:pointer;
+}
+button:hover{
+    color: white; 
 }
