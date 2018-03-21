@@ -266,16 +266,13 @@ public class DAO {
         return result;
     }
 
-    public int deleteCommande(int order_num) throws DAOException {
+    public int deleteCommande(int order_num) throws SQLException {
         int result = 0;
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, order_num);
             result = stmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            throw new DAOException(ex.getMessage());
         }
         return result;
     }

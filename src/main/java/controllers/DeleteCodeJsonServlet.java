@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,13 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modeles.DAO;
+import modeles.DAOException;
 import modeles.DataSourceFactory;
 
 /**
  *
  * @author rbastide
  */
-@WebServlet(name = "deleteDiscountCode", urlPatterns = {"/deleteCode"})
+@WebServlet(name = "deleteCommande", urlPatterns = {"/deleteCommande"})
 public class DeleteCodeJsonServlet extends HttpServlet {
 
 	/**
@@ -36,20 +35,17 @@ public class DeleteCodeJsonServlet extends HttpServlet {
 		throws ServletException, IOException {
 		// Créér le DAO avec sa source de données
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
-		String code = request.getParameter("code");
+		int order_num = Integer.parseInt(request.getParameter("order_num"));
 		String message;
 		try {
-			int count = dao.deleteDiscountCode(code);
+			int count = dao.deleteCommande(order_num);
 			// Générer du JSON
 			if (count == 1) {
-				message = String.format("Code %s supprimé", code);
+				message = String.format("Commande %s supprimée", order_num);
 			} else {
-				message = String.format("Code %s inconnu", code);
+				message = String.format("Commande %s inconnue", order_num);
 			}
-		} catch (SQLIntegrityConstraintViolationException e) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			message = String.format("Impossible de supprimer '%s', ce code est utilisé", code);
-		}
+                }
 		catch (SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			message = ex.getMessage();

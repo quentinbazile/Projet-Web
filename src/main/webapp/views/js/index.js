@@ -47,8 +47,25 @@ function addCommande(product_id) {
     $.ajax({
         url: "addCommande",
         data: {"product_id": product_id},
+        data: $('#qte').val(), // bidouillage input hidden pour mettre product_id dedans, du coup submit avec serialize()
         dataType: "json",
         success: // La fonction qui traite les résultats
+                function (result) {
+                    showOrders();
+                    console.log(result);
+                },
+        error: showError
+    });
+    return false;
+}
+
+// Supprimer un code
+function deleteCommande(order_num) {
+    $.ajax({
+        url: "deleteCommande",
+        data: {"order_num": order_num},
+        dataType: "json",
+        success:
                 function (result) {
                     showOrders();
                     console.log(result);
