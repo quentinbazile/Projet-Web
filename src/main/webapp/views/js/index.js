@@ -47,7 +47,7 @@ function addCommande(product_id) {
     $.ajax({
         url: "addCommande",
         data: {"product_id": product_id},
-        data: $('#qte').val(), // bidouillage input hidden pour mettre product_id dedans, du coup submit avec serialize()
+        // data: $('#qte').val(), // bidouillage input hidden pour mettre product_id dedans, du coup submit avec serialize()
         dataType: "json",
         success: // La fonction qui traite les résultats
                 function (result) {
