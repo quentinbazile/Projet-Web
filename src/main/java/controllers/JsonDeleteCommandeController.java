@@ -21,7 +21,7 @@ import modeles.DataSourceFactory;
  * @author rbastide
  */
 @WebServlet(name = "deleteCommande", urlPatterns = {"/deleteCommande"})
-public class DeleteCodeJsonServlet extends HttpServlet {
+public class JsonDeleteCommandeController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
