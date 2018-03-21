@@ -49,7 +49,7 @@ public class DAOTest {
     }
     
     @Test
-    public void testDeleteCommande() throws DAOException {
+    public void testDeleteCommande() throws SQLException {
         int order_num = 40000000;
         assertEquals(0, myDAO.deleteCommande(order_num));
     }
