@@ -10,7 +10,7 @@
         <!-- un JS pour les fonctions AJAX et JSON -->
         <script src="views/js/index.js"></script>
         <!-- un CSS pour formatter la table -->
-        <link rel="stylesheet" type="text/css" href="views/css/table.css"> 
+        <link rel="stylesheet" type="text/css" href="views/css/customer.css"> 
     </head>
     <body>
         <form action="../ProjetWeb/" method="POST"> 
@@ -31,7 +31,7 @@
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        <TD><input id="qte" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
+                        <TD><input class="qte" id="{{product_id}}" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
                         <TD>à développer</TD>
                         <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>

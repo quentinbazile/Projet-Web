@@ -38,14 +38,14 @@ public class JsonAddCommandeController extends HttpServlet {
             
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
                 
-                int quantity = 1;
+                int quantity = Integer.parseInt(request.getParameter("qte"));
                 int product_id = Integer.parseInt(request.getParameter("product_id"));
                 String freight_company = "We deliver";
 		String message;
                 
 		int order_num = dao.orderNum() + 1;
 		int customer_id = LoginController.passwordParam;
-                float shipping_cost = 2 * quantity;
+                float shipping_cost = 400 + 2 * quantity;
                 Date sales_date = new Date(System.currentTimeMillis());
                 Date shipping_date = sales_date;
 		
