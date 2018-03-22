@@ -179,7 +179,7 @@ public class DAO {
 
     public List<ProductEntity> listeProduits() throws SQLException {
         List<ProductEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0 ORDER BY DESCRIPTION";
+        String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
             ResultSet rs = stmt.executeQuery(sql); // Un ResultSet pour parcourir les enregistrements du résultat
@@ -204,7 +204,7 @@ public class DAO {
     
     public List<PurchaseOrderEntity> listeCommandes(String userName) throws SQLException {
         List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) WHERE EMAIL = ?";
+        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ?";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
             pstmt.setString(1, userName);
@@ -219,8 +219,9 @@ public class DAO {
                     String freight_company = rs.getString("FREIGHT_COMPANY");
                     int customer_id = rs.getInt("CUSTOMER_ID");
                     int product_id = rs.getInt("PRODUCT_ID");
+                    float purchase_cost = rs.getFloat("PURCHASE_COST") * quantity + shipping_cost;
                     // On crée l'objet entité
-                    PurchaseOrderEntity o = new PurchaseOrderEntity(order_num, quantity, shipping_cost, sales_date, shipping_date, freight_company, customer_id, product_id);
+                    PurchaseOrderEntity o = new PurchaseOrderEntity(order_num, quantity, shipping_cost, sales_date, shipping_date, freight_company, customer_id, product_id, purchase_cost);
                     // On l'ajoute à la liste des résultats
                     result.add(o);
                 }

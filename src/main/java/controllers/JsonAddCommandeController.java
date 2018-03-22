@@ -40,7 +40,7 @@ public class JsonAddCommandeController extends HttpServlet {
                 
                 int quantity = Integer.parseInt(request.getParameter("qte"));
                 int product_id = Integer.parseInt(request.getParameter("product_id"));
-                String freight_company = "We deliver";
+                String freight_company = request.getParameter("fc");
 		String message;
                 
 		int order_num = dao.orderNum() + 1;

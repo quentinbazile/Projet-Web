@@ -6,32 +6,32 @@ body {
 }
 
 table {
-  font-family: verdana, arial, sans-serif;
-  font-size: 11px;
-  font-weight: bold;
-  color: #333333;
-  border-width: 1px;
-  border-color: #666666;
-  border-collapse: collapse;
-  overflow: hidden;
-  z-index: 1;
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    color: #333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+    overflow: hidden;
+    z-index: 1;
 }
 
 th, td {
-  border: 1px solid #666666;
-  padding: 8px;
-  cursor: pointer;
-  position: relative;
-  background-color: rgba(255, 255, 255, .5);
+    border: 1px solid #666666;
+    padding: 8px;
+    cursor: pointer;
+    position: relative;
+    background-color: rgba(255, 255, 255, .5);
 }
 
 th {
-  font-size: 13px;
-  background-color: rgba(255, 255, 255, .75);
+    font-size: 13px;
+    background-color: rgba(255, 255, 255, .75);
 }
 
 tr:hover{
-  background-color: #B0AAAA;
+    background-color: #B0AAAA;
 }
 
 td:hover::after { 
@@ -46,7 +46,7 @@ td:hover::after {
 }
 
 td:hover{
-  background-color: #4FF94F;
+    background-color: #4FF94F;
 }
 
 h1 {
@@ -56,7 +56,7 @@ h1 {
 
 #orders{
     width: 1500px;
-    margin-left:-25%;
+    margin-left:-31%;
     margin-bottom: 8%;
 }
 
@@ -90,14 +90,31 @@ input[type=submit]{
 }
 
 input[type=submit]:hover{
-     color: red; 
+    color: red; 
 }
 
-.btn, .qte{
+.btn, .qte, .fc{
     margin-top: 1px;
     margin-bottom: 1px;
 }
 
 .qte{
     width: 50px;
+}
+
+.fc, .fc option, .qte {
+    padding:3px;
+    margin: 0;
+    border-radius:4px;
+    box-shadow: 0 3px 0 #ccc, 0 -1px #fff inset;
+    background: #f8f8f8;
+    color:#585858;
+    border:none;
+    outline:none;
+    display: inline-block;
+    appearance:none;
+    cursor:pointer;
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold; 
 }

@@ -46,7 +46,7 @@ function showOrders() {
 function addCommande(product_id) {
     $.ajax({
         url: "addCommande",
-        data: {"product_id": product_id, "qte": $("#" + product_id).val()},
+        data: {"product_id": product_id, "qte": $("#qte" + product_id).val(), "fc": $("#fc" + product_id).val()},
         dataType: "json",
         success: // La fonction qui traite les résultats
                 function (result) {

@@ -21,8 +21,9 @@ public class PurchaseOrderEntity {
     private String freight_company;
     private int customer_id;
     private int product_id;
+    private float purchase_cost;
 
-    public PurchaseOrderEntity(int order_num, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company, int customer_id, int product_id) {
+    public PurchaseOrderEntity(int order_num, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company, int customer_id, int product_id, float purchase_cost) {
         this.order_num = order_num;
         this.quantity = quantity;
         this.shipping_cost = shipping_cost;
@@ -31,6 +32,7 @@ public class PurchaseOrderEntity {
         this.freight_company = freight_company;
         this.customer_id = customer_id;
         this.product_id = product_id;
+        this.purchase_cost = purchase_cost;
     }
 
     public int getOrder_num() {
@@ -63,6 +65,9 @@ public class PurchaseOrderEntity {
 
     public int getProduct_id() {
         return product_id;
+    }
+    public float getPurchase_cost() {
+        return purchase_cost;
     }
 }
 

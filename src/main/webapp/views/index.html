@@ -31,8 +31,18 @@
                     {{! Une ligne dans la table }}
                     <TR>
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        <TD><input class="qte" id="{{product_id}}" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
-                        <TD>à développer</TD>
+                        <TD><input class="qte" id="qte{{product_id}}" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
+                        <TD>
+                            <select class="fc" id="fc{{product_id}}">
+                                <option value="Coastal Freight">Coastal Freight</option>
+                                <option value="FR Express">FR Express</option>
+                                <option value="Poney Express">Poney Express</option>
+                                <option value="Slow Snail">Slow Snail</option>
+                                <option value="Southern Delivery Service">Southern Delivery Service</option>
+                                <option value="We deliver">We deliver</option>
+                                <option value="Western Fast">Western Fast</option>
+                            </select>
+                        </TD>
                         <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>
                 {{/records}}
@@ -46,15 +56,15 @@
         <!-- Le template qui sert à formatter la liste des commandes -->
         <script id="ordersTemplate" type="text/template">
             <TABLE>
-                <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Date d'achat</th><th>Date d'expédition</th>
+                <tr><th>Numéro de commande</th><th>Numéro de produit</th><th>Quantité</th><th>Frais de port</th><th>Prix</th><th>Date d'achat</th><th>Date d'expédition</th>
                     <th>Compagnie de transport</th><th>Action</th><th>Annulation</th>
                 </tr>
                 {{! Pour chaque enregistrement }}
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD>
-                        <TD>{{freight_company}}</TD>
+                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD>
+                        <TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD>
                         <TD><button class="btn">Modifier</button>
                         <TD><button class="btn" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
                     </TR>
