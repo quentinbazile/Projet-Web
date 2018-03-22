@@ -30,21 +30,13 @@
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                    <form id="codeForm" onsubmit="event.preventDefault(); addCommande();">
                         <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
-                        
-                        
-                        <TD>
-                            <input id="qte" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1">
-                            <input id="product_id" name="product_id" value="{{product_id}}">
-                        </TD>
+                        <TD><input id="qte" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
                         <TD>à développer</TD>
-                        <TD><input type="submit" value="Commander"></TD>
-                    </form>   
+                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
-            
         </script>
         
         <h1>Mes commandes</h1>

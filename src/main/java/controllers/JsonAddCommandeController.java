@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import modeles.DAO;
+import modeles.DAOException;
 import modeles.DataSourceFactory;
 
 /**
@@ -33,11 +34,11 @@ public class JsonAddCommandeController extends HttpServlet {
 	 * @throws IOException if an I/O error occurs
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException, SQLException {
+		throws ServletException, IOException, DAOException {
             
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
                 
-                int quantity = Integer.parseInt(request.getParameter("qte"));
+                int quantity = 1;
                 int product_id = Integer.parseInt(request.getParameter("product_id"));
                 String freight_company = "We deliver";
 		String message;
@@ -48,13 +49,8 @@ public class JsonAddCommandeController extends HttpServlet {
                 Date sales_date = new Date(System.currentTimeMillis());
                 Date shipping_date = sales_date;
 		
-                try {
-                    dao.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company);
-                    message = String.format("Commande %s ajoutée", order_num);
-                } catch (NumberFormatException | SQLException ex) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			message = ex.getMessage();
-		}
+		dao.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company);
+                message = String.format("Commande %s ajoutée", order_num);
 
 		Properties resultat = new Properties();
 		resultat.put("message", message);
@@ -79,12 +75,12 @@ public class JsonAddCommandeController extends HttpServlet {
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException { 
+		throws ServletException, IOException {
             try {
                 processRequest(request, response);
-            } catch (SQLException ex) {
+            } catch (DAOException ex) {
                 Logger.getLogger(JsonAddCommandeController.class.getName()).log(Level.SEVERE, null, ex);
-            }     
+            }
 	}
 
 	/**
@@ -100,7 +96,7 @@ public class JsonAddCommandeController extends HttpServlet {
 		throws ServletException, IOException {
             try {
                 processRequest(request, response);
-            } catch (SQLException ex) {
+            } catch (DAOException ex) {
                 Logger.getLogger(JsonAddCommandeController.class.getName()).log(Level.SEVERE, null, ex);
             }
 	}
