@@ -43,11 +43,10 @@ function showOrders() {
 }
 
 // Ajouter une commande
-function addCommande(product_id) {
+function addCommande() {
     $.ajax({
         url: "addCommande",
-        data: {"product_id": product_id},
-        // data: $('#qte').val(), // bidouillage input hidden pour mettre product_id dedans, du coup submit avec serialize()
+        data: $("#codeForm").serialize(),
         dataType: "json",
         success: // La fonction qui traite les résultats
                 function (result) {

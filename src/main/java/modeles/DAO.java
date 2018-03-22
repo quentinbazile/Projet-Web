@@ -229,7 +229,7 @@ public class DAO {
         return result;
     }
 
-    public int orderNum() throws DAOException {
+    public int orderNum() throws SQLException {
         int result = 0;
         String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
@@ -240,14 +240,11 @@ public class DAO {
                 // On récupère le champ NUMBER de l'enregistrement courant
                 result = rs.getInt("ORDER_NUM");
             }
-        } catch (SQLException ex) {
-            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            throw new DAOException(ex.getMessage());
-        }
+        } 
         return result;
     }
 
-    public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
+    public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws SQLException {
         int result = 0;
         String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = myDataSource.getConnection();
@@ -261,10 +258,7 @@ public class DAO {
             pstmt.setDate(7, shipping_date);
             pstmt.setString(8, freight_company);
             result = pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
-            throw new DAOException(ex.getMessage());
-        }
+        } 
         return result;
     }
 
@@ -373,7 +367,7 @@ public class DAO {
 	 * @return la liste des clients habitant dans cet état
 	 * @throws SQLException
 	 */
-	public List<CustomerEntity> customers(String id, ) throws SQLException {
+	/*public List<CustomerEntity> customers(String id, ) throws SQLException {
 		List<CustomerEntity> result = new LinkedList<>();
 		// Une requête SQL paramétrée
 		String sql = "SELECT * FROM CUSTOMER WHERE STATE = ?";
