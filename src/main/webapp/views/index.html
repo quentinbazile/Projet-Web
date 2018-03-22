@@ -9,7 +9,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
         <!-- un JS pour les fonctions AJAX et JSON -->
         <script src="views/js/index.js"></script>
-        <!-- un CSS pour formatter la table -->
+        <!-- un CSS pour formatter la page web -->
         <link rel="stylesheet" type="text/css" href="views/css/customers.css"> 
     </head>
     <body>
@@ -24,13 +24,13 @@
         <script id="productsTemplate" type="text/template">
             <TABLE>
                 <tr>
-                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Marquage</th><th>Description</th><th>Nombre</th><th>Compagnie de transport</th><th>Action</th>
+                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Description</th><th>Nombre</th><th>Compagnie de transport</th><th>Action</th>
                 </tr>
                 {{! Pour chaque enregistrement }}
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                        <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{markup}}</TD><TD>{{description}}</TD>
+                        <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{description}}</TD>
                         <TD><input class="qte" id="qte{{product_id}}" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
                         <TD>
                             <select class="fc" id="fc{{product_id}}">
