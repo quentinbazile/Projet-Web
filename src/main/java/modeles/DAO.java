@@ -373,7 +373,7 @@ public class DAO {
 	 * @return la liste des clients habitant dans cet état
 	 * @throws SQLException
 	 */
-	public List<CustomerEntity> customers(String id, ) throws SQLException {
+	/*public List<CustomerEntity> customers(String id, ) throws SQLException {
 		List<CustomerEntity> result = new LinkedList<>();
 		// Une requête SQL paramétrée
 		String sql = "SELECT * FROM CUSTOMER WHERE STATE = ?";
