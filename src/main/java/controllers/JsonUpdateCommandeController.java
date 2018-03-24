@@ -46,7 +46,7 @@ public class JsonUpdateCommandeController extends HttpServlet {
 		String message;
 		
 		dao.updateCommande(quantity, freight_company, shipping_cost, order_num);
-                message = String.format("Commande %s ajoutée", order_num);
+                message = String.format("Commande %s modifiée", order_num);
 
 		Properties resultat = new Properties();
 		resultat.put("message", message);

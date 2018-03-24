@@ -30,7 +30,7 @@
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                        <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD>{{quantity_on_hand}}</TD><TD>{{description}}</TD>
+                        <TD>{{product_id}}</TD><TD>{{purchase_cost}}</TD><TD id="qteMax{{product_id}}">{{quantity_on_hand}}</TD><TD>{{description}}</TD>
                         <TD><input class="qte" id="qte{{product_id}}" name="qte" type="number" step="1" min="1" max="{{quantity_on_hand}}" value="1"></TD>
                         <TD>
                             <select class="fc" id="fc{{product_id}}">
@@ -63,8 +63,8 @@
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD>
-                        <TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD>
+                        <TD>{{order_num}}</TD><TD id="product_id{{order_num}}">{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD>
+                        <TD>{{shipping_cost}}</TD><TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD><TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD>
                         <TD><button class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
                         <TD><button class="btn" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
                     </TR>
