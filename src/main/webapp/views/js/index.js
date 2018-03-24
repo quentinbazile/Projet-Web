@@ -59,10 +59,10 @@ function addCommande(product_id) {
 }
 
 // Modifier une commande
-function updateCommande(order_num, qte) {
+function updateCommande(order_num, qte, fc) {
     $.ajax({
         url: "updateCommande",
-        data: {"order_num": order_num, "qte": qte},
+        data: {"order_num": order_num, "qte": qte, "fc": fc},
         dataType: "json",
         success:
                 function (result) {
@@ -81,12 +81,24 @@ function paramUpdateCommande(order_num) {
         let product_id = document.getElementById("product_id"+order_num).innerHTML;
         let qteMax = document.getElementById("qteMax"+product_id).innerHTML;
         document.getElementById("qte"+order_num).innerHTML = '<input id="newQte' + order_num + '" class="qte" name="qte" value="' + qte + '" type="number" step="1" min="1" max="' + qteMax + '">';
+        let fc = document.getElementById("fc"+order_num).innerHTML;
+        document.getElementById("fc"+order_num).innerHTML = 
+                '<select class="fc" id="newFc' + order_num + '">\n\
+                    <option value="Coastal Freight">Coastal Freight</option>\n\
+                    <option value="FR Express">FR Express</option>\n\
+                    <option value="Poney Express">Poney Express</option>\n\
+                    <option value="Slow Snail">Slow Snail</option>\n\
+                    <option value="Southern Delivery Service">Southern Delivery Service</option>\n\
+                    <option value="We deliver">We deliver</option>\n\
+                    <option value="Western Fast">Western Fast</option>\n\
+                </select>';
+        document.getElementById("newFc"+order_num).value = fc;
     }
     else{
         document.getElementById("btnUpdate"+order_num).innerHTML = "Modifier";
         let newQte = document.getElementById("newQte"+order_num).value;
-        document.getElementById("qte"+order_num).innerHTML = newQte;
-        updateCommande(order_num, newQte);
+        let newFc = document.getElementById("newFc"+order_num).value;
+        updateCommande(order_num, newQte, newFc);
     }
 }
 
