@@ -58,7 +58,23 @@ function addCommande(product_id) {
     return false;
 }
 
-// Supprimer un code
+// Modifier une commande
+function updateCommande(order_num, qte) {
+    $.ajax({
+        url: "updateCommande",
+        data: {"order_num": order_num, "qte": qte},
+        dataType: "json",
+        success:
+                function (result) {
+                    showOrders();
+                    console.log(result);
+                },
+        error: showError
+    });
+    return false;
+}
+
+// Supprimer une commande
 function deleteCommande(order_num) {
     $.ajax({
         url: "deleteCommande",
@@ -72,6 +88,22 @@ function deleteCommande(order_num) {
         error: showError
     });
     return false;
+}
+
+function paramUpdateCommande(order_num) {
+    let res;
+    if(document.getElementById("btnUpdate"+order_num).innerHTML === "Modifier"){
+        document.getElementById("btnUpdate"+order_num).innerHTML = "Valider";
+        let qte = document.getElementById("qte"+order_num).innerHTML;
+        document.getElementById("qte"+order_num).innerHTML = '<input id="new' + order_num + '" class="qte" name="qte" value="' + qte + '" type="number">';
+        res = qte;
+    }
+    else{
+        document.getElementById("btnUpdate"+order_num).innerHTML = "Modifier";
+        let newQte = document.getElementById("new"+order_num).value;
+        document.getElementById("qte"+order_num).innerHTML = newQte;
+        updateCommande(order_num, newQte);
+    }
 }
 
 // Fonction qui traite les erreurs de la requête

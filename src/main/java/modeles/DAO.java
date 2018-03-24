@@ -280,17 +280,15 @@ public class DAO {
         return result;
     }
 
-    public int updateCommande(int product_id, int quantity, float shipping_cost, Date sales_date, String freight_company, int order_num) throws DAOException {
+    public int updateCommande(int quantity, String freight_company, float shipping_cost, int order_num) throws DAOException {
         int result = 0;
-        String sql = "UPDATE PURCHASE_ORDER SET product_id = ?, quantity = ?, shipping_cost = ?, sales_date = ?, freight_company = ? WHERE order_num = ?";
+        String sql = "UPDATE PURCHASE_ORDER SET quantity = ?, freight_company = ?, shipping_cost = ? WHERE order_num = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setInt(1, product_id);
-            pstmt.setInt(2, quantity);
+            pstmt.setInt(1, quantity);
+            pstmt.setString(2, freight_company);
             pstmt.setFloat(3, shipping_cost);
-            pstmt.setDate(4, sales_date);
-            pstmt.setString(5, freight_company);
-            pstmt.setInt(6, order_num);
+            pstmt.setInt(4, order_num);
             result = pstmt.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);

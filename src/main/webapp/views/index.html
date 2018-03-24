@@ -63,9 +63,9 @@
                 {{#records}}
                     {{! Une ligne dans la table }}
                     <TR>
-                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD>{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD>
+                        <TD>{{order_num}}</TD><TD>{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD><TD>{{shipping_cost}}</TD><TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD>
                         <TD>{{shipping_date}}</TD><TD>{{freight_company}}</TD>
-                        <TD><button class="btn">Modifier</button>
+                        <TD><button class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
                         <TD><button class="btn" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
                     </TR>
                 {{/records}}
