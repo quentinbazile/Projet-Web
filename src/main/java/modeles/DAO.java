@@ -297,7 +297,20 @@ public class DAO {
         return result;
     }
     
-    
+    public int updateQuantity(int quantity, int product_id) throws DAOException {
+        int result = 0;
+        String sql = "UPDATE PRODUCT SET quantity_on_hand = quantity_on_hand - ? WHERE product_id = ?";
+        try (Connection connection = myDataSource.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, quantity);
+            pstmt.setInt(2, product_id);
+            result = pstmt.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
+            throw new DAOException(ex.getMessage());
+        }
+        return result;
+    }  
     
     
     /**

@@ -50,6 +50,7 @@ public class JsonAddCommandeController extends HttpServlet {
                 Date shipping_date = sales_date;
 		
 		dao.ajoutCommande(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company);
+                dao.updateQuantity(quantity, product_id);
                 message = String.format("Commande %s ajoutée", order_num);
 
 		Properties resultat = new Properties();

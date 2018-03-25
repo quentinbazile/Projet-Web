@@ -55,6 +55,7 @@ function addCommande(product_id) {
                 },
         error: showError
     });
+    showProducts();
     return false;
 }
 
