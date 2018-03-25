@@ -52,23 +52,24 @@ function addCommande(product_id) {
                 function (result) {
                     showOrders();
                     console.log(result);
+                    showProducts();
                 },
         error: showError
     });
-    showProducts();
     return false;
 }
 
 // Modifier une commande
-function updateCommande(order_num, qte, fc) {
+function updateCommande(order_num, newQte, fc) {
     $.ajax({
         url: "updateCommande",
-        data: {"order_num": order_num, "qte": qte, "fc": fc},
+        data: {"order_num": order_num, "newQte": newQte, "fc": fc, "product_id": $("#product_id" + order_num).html(), "qte": $("#newQte" + order_num).attr('name')},
         dataType: "json",
         success:
                 function (result) {
                     showOrders();
                     console.log(result);
+                    showProducts();
                 },
         error: showError
     });
@@ -81,7 +82,7 @@ function paramUpdateCommande(order_num) {
         let qte = document.getElementById("qte"+order_num).innerHTML;
         let product_id = document.getElementById("product_id"+order_num).innerHTML;
         let qteMax = document.getElementById("qteMax"+product_id).innerHTML;
-        document.getElementById("qte"+order_num).innerHTML = '<input id="newQte' + order_num + '" class="qte" name="qte" value="' + qte + '" type="number" step="1" min="1" max="' + qteMax + '">';
+        document.getElementById("qte"+order_num).innerHTML = '<input id="newQte' + order_num + '" class="qte" name="' + qte + '" value="' + qte + '" type="number" step="1" min="1" max="' + qteMax + '">';
         let fc = document.getElementById("fc"+order_num).innerHTML;
         document.getElementById("fc"+order_num).innerHTML = 
                 '<select class="fc" id="newFc' + order_num + '">\n\
@@ -107,12 +108,13 @@ function paramUpdateCommande(order_num) {
 function deleteCommande(order_num) {
     $.ajax({
         url: "deleteCommande",
-        data: {"order_num": order_num},
+        data: {"order_num": order_num, "product_id": $("#product_id" + order_num).html(), "qte": $("#qte" + order_num).html()},
         dataType: "json",
         success:
                 function (result) {
                     showOrders();
                     console.log(result);
+                    showProducts();
                 },
         error: showError
     });

@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,16 +34,19 @@ public class JsonDeleteCommandeController extends HttpServlet {
 	 * @throws IOException if an I/O error occurs
 	 */
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-		throws ServletException, IOException {
+		throws ServletException, IOException, DAOException {
 		// Créér le DAO avec sa source de données
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
 		int order_num = Integer.parseInt(request.getParameter("order_num"));
+                int product_id = Integer.parseInt(request.getParameter("product_id"));
+                int quantity = Integer.parseInt(request.getParameter("qte"));
 		String message;
 		try {
 			int count = dao.deleteCommande(order_num);
 			// Générer du JSON
 			if (count == 1) {
 				message = String.format("Commande %s supprimée", order_num);
+                                dao.updateQuantity((-quantity), product_id);
 			} else {
 				message = String.format("Commande %s inconnue", order_num);
 			}
@@ -75,7 +80,11 @@ public class JsonDeleteCommandeController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+            try {
+                processRequest(request, response);
+            } catch (DAOException ex) {
+                Logger.getLogger(JsonDeleteCommandeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
@@ -89,7 +98,11 @@ public class JsonDeleteCommandeController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
-		processRequest(request, response);
+            try {
+                processRequest(request, response);
+            } catch (DAOException ex) {
+                Logger.getLogger(JsonDeleteCommandeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 	}
 
 	/**
