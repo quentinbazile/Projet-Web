@@ -38,13 +38,16 @@ public class JsonUpdateCommandeController extends HttpServlet {
             
 		DAO dao = new DAO(DataSourceFactory.getDataSource());
                 
-                int quantity = Integer.parseInt(request.getParameter("qte"));
+                int newQte = Integer.parseInt(request.getParameter("newQte"));
                 int order_num = Integer.parseInt(request.getParameter("order_num"));
-                float shipping_cost = 400 + 2 * quantity;
+                float shipping_cost = 400 + 2 * newQte;
                 String freight_company = request.getParameter("fc");
+                int product_id = Integer.parseInt(request.getParameter("product_id"));
+                int quantity = Integer.parseInt(request.getParameter("qte"));
 		String message;
 		
-		dao.updateCommande(quantity, freight_company, shipping_cost, order_num);
+		dao.updateCommande(newQte, freight_company, shipping_cost, order_num);
+                dao.updateQuantity(newQte - quantity, product_id);
                 message = String.format("Commande %s modifiée", order_num);
 
 		Properties resultat = new Properties();

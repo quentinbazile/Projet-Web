@@ -6,11 +6,11 @@
         <!-- Les identifiants pour se connecter -->
         <init-param>
             <param-name>login</param-name>
-            <param-value>untel</param-value>
+            <param-value>root</param-value>
         </init-param>
         <init-param>
             <param-name>password</param-name>
-            <param-value>ABCD</param-value>
+            <param-value>root</param-value>
         </init-param>
         <init-param>
             <param-name>userName</param-name>

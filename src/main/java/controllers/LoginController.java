@@ -14,7 +14,7 @@ import modeles.DataSourceFactory;
 
 public class LoginController extends HttpServlet {
     
-    protected static String userName;
+    protected static String userName, Admin;
     protected static int passwordParam;
 
 	/**
@@ -44,6 +44,7 @@ public class LoginController extends HttpServlet {
 		// Est-ce que l'utilisateur est connecté ?
 		// On cherche l'attribut userName dans la session
 		userName = findUserInSession(request);
+                Admin = findAdminInSession(request);
 		String jspView;
 		if (null == userName) { // L'utilisateur n'est pas connecté
 			// On choisit la page de login
@@ -51,7 +52,10 @@ public class LoginController extends HttpServlet {
 
 		} else { // L'utilisateur est connecté
 			// On choisit la page d'affichage
-			jspView = "views/index.html";
+                        if(userName.equals(Admin))
+                            jspView = "views/ChiffreCateg.jsp";
+                        else   
+                            jspView = "views/index.html";
 		}
 		// On va vers la page choisie
 		request.getRequestDispatcher(jspView).forward(request, response);
@@ -108,23 +112,27 @@ public class LoginController extends HttpServlet {
 	private void checkLogin(HttpServletRequest request) throws DAOException {
 		// Les paramètres transmis dans la requête
 		String loginParam = request.getParameter("loginParam");
-                // int passwordParam;
+                String passwordParamAdmin = request.getParameter("passwordParam");
                 try {
                     passwordParam = Integer.parseInt(request.getParameter("passwordParam"));
                 }
                 catch(NumberFormatException nfe){ 
                     passwordParam = 0;
                 }
+                
+                // Le login/password défini dans web.xml
+		String login = getInitParameter("login");
+		String password = getInitParameter("password");
    
                 DAO dao = new DAO(DataSourceFactory.getDataSource());
 
-		if (dao.checkLogin(loginParam, passwordParam)) {
+		if (dao.checkLogin(loginParam, passwordParam) || (login.equals(loginParam) && (password.equals(passwordParamAdmin)))) {
 			// On a trouvé la combinaison login / password
 			// On stocke l'information dans la session
 			HttpSession session = request.getSession(true); // démarre la session
 			session.setAttribute("userName", loginParam);
+                        session.setAttribute("Admin", login);
 		}
-                System.out.println(dao.checkLogin(loginParam, passwordParam));
 	}
 
 	private void doLogout(HttpServletRequest request) {
@@ -138,5 +146,10 @@ public class LoginController extends HttpServlet {
 	private String findUserInSession(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		return (session == null) ? null : (String) session.getAttribute("userName");
+	}
+        
+        private String findAdminInSession(HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		return (session == null) ? null : (String) session.getAttribute("Admin");
 	}
 }
