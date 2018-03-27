@@ -438,11 +438,11 @@ public class DAO {
 	 */
 	public Map<String, Double> salesByCustomer() throws SQLException {
 		Map<String, Double> result = new HashMap<>();
-		String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES" +
-		"	      FROM CUSTOMER c" +
-		"	      INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)" +
-		"	      INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID)" +
-		"	      GROUP BY NAME";
+		String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES "
+                        + "FROM CUSTOMER "
+                        + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
+                        + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                        + "GROUP BY NAME";
 		try (Connection connection = myDataSource.getConnection(); 
 		     Statement stmt = connection.createStatement(); 
 		     ResultSet rs = stmt.executeQuery(sql)) {
