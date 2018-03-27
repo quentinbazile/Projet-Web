@@ -132,10 +132,7 @@ public class LoginController extends HttpServlet {
 			HttpSession session = request.getSession(true); // démarre la session
 			session.setAttribute("userName", loginParam);
                         session.setAttribute("Admin", login);
-                        System.out.println("ok");
 		}
-                System.out.println(dao.checkLogin(loginParam, passwordParam));
-                System.out.println(login + password + loginParam + passwordParam);
 	}
 
 	private void doLogout(HttpServletRequest request) {
