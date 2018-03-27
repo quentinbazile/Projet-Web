@@ -36,8 +36,8 @@
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
         
         
-        <p>Date de début: <input type="text" id="datepickerDebut"></p>
-        <p>Date de fin: <input type="text" id="datepickerFin"></p>
+        <p>Date de début: <input type="date" id="datepickerDebut"></p>
+        <p>Date de fin: <input type="date" id="datepickerFin"></p>
         
     </body>
 </html>
