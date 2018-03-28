@@ -430,13 +430,10 @@ public class DAO {
 		return result;
 	}
 
-	/**
-	 * ventes par client
-	 *
-	 * @return Une Map associant le nom du client à son chiffre d'affaires
-	 * @throws SQLException
-	 */
-	public Map<String, Double> salesByCustomer() throws SQLException {
+	
+        
+        
+	public Map<String, Double> salesByCustomer(Date debut, Date fin) throws SQLException {
 		Map<String, Double> result = new HashMap<>();
 		String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                         + "FROM CUSTOMER "
@@ -445,16 +442,19 @@ public class DAO {
                         + "WHERE SALES_DATE BETWEEN ? AND ? "
                         + "GROUP BY NAME";
 		try (Connection connection = myDataSource.getConnection(); 
-		     PreparedStatement stmt = connection.prepareStatement(sql); 
-		     ResultSet rs = stmt.executeQuery(sql)) {
-			while (rs.next()) {
+                        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setDate(1, debut);
+                    pstmt.setDate(2, fin);
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                       while (rs.next()) {
 				// On récupère les champs nécessaires de l'enregistrement courant
 				String name = rs.getString("NAME");
 				double sales = rs.getDouble("SALES");
 				// On l'ajoute à la liste des résultats
 				result.put(name, sales);
-			}
-		}
+			} 
+                    }
+                }
 		return result;
 	}
         
