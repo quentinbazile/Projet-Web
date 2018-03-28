@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +16,7 @@
         <script src="js/jquery-ui-datepicker.min.js"></script>
 	<!-- On charge l'API Google -->
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-        <link rel="stylesheet" type="text/css" href="views/css/stat.css">
+        <link rel="stylesheet" href="<c:url value="views/css/stat.css"/>">
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
         <script type="text/javascript">
             
