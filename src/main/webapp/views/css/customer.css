@@ -50,17 +50,17 @@ td:hover{
 h1 {
     font-family: verdana, arial, sans-serif;
     font-size: 29px;
-    margin-left: 41.5%;
+    /*margin-left: 41.5%;*/
     color: white;
     text-shadow: 3px 3px #1C1C1C;
 }
 
 #products{
-    margin-left: 18%;
+    /*margin-left: 18%;*/
 }
 
 #orders{
-    margin-left: 10%;
+    /*margin-left: 10%;*/
     margin-bottom: 8%;
 }
 
@@ -85,7 +85,7 @@ input[type=submit]{
     font-weight: bold; 
     height: 25px;
     cursor:pointer;
-    margin-left: 86.3%;
+    /*margin-left: 86.3%;*/
 }
 
 input[type=submit]:hover{
