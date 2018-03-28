@@ -74,10 +74,10 @@
         </script></center>
         <script type="text/javascript">
             function commandeEnvoyee(order_num, shipping_date){
-                var m = new Array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
+                let m = new Array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
                 let bU = document.getElementById('btnUpdate' + order_num);
                 let bD = document.getElementById('btnDelete' + order_num);
-                var dateNow = new Date();
+                let dateNow = new Date();
                 dateNow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate());
                 let annee = shipping_date.split(" ")[2];
                 let mois = shipping_date.split(" ")[0];
