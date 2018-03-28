@@ -442,9 +442,10 @@ public class DAO {
                         + "FROM CUSTOMER "
                         + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
                         + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                        + "WHERE SALES_DATE BETWEEN ? AND ? "
                         + "GROUP BY NAME";
 		try (Connection connection = myDataSource.getConnection(); 
-		     Statement stmt = connection.createStatement(); 
+		     PreparedStatement stmt = connection.prepareStatement(sql); 
 		     ResultSet rs = stmt.executeQuery(sql)) {
 			while (rs.next()) {
 				// On récupère les champs nécessaires de l'enregistrement courant
@@ -463,6 +464,7 @@ public class DAO {
 		"	      FROM CUSTOMER c" +
 		"	      INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)" +
 		"	      INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID)" +
+                "             WHERE SALES_DATE BETWEEN ? AND ? " +
 		"	      GROUP BY CITY";
 		try (Connection connection = myDataSource.getConnection(); 
 		     Statement stmt = connection.createStatement(); 
@@ -480,11 +482,11 @@ public class DAO {
         
          public Map<String, Double> salesByProduct() throws SQLException {
 		Map<String, Double> result = new HashMap<>();
-		String sql = "SELECT CITY, SUM(PURCHASE_COST * QUANTITY) AS SALES" +
-		"	      FROM CUSTOMER c" +
-		"	      INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)" +
-		"	      INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID)" +
-		"	      GROUP BY CITY";
+		String sql = "SELECT PURCHASE_ORDER.PRODUCT_ID, SUM(PURCHASE_COST * QUANTITY) AS SALES" +
+		"	      FROM PURCHASE_ORDER" +
+		"	      INNER JOIN PRODUCT ON (PURCHASE_ORDER.PRODUCT_ID = PRODUCT.PRODUCT_ID)" +
+                "             WHERE SALES_DATE BETWEEN ? AND ? " +
+		"	      GROUP BY PURCHASE_ORDER.PRODUCT_ID";
 		try (Connection connection = myDataSource.getConnection(); 
 		     Statement stmt = connection.createStatement(); 
 		     ResultSet rs = stmt.executeQuery(sql)) {
