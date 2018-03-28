@@ -46,7 +46,7 @@ public class DAO {
 
     public List<ProductEntity> listeProduits() throws SQLException {
         List<ProductEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0";
+        String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0 ORDER BY PRODUCT_ID";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
             ResultSet rs = stmt.executeQuery(sql); // Un ResultSet pour parcourir les enregistrements du résultat

@@ -67,7 +67,7 @@
                         <TD>{{order_num}}</TD><TD id="product_id{{order_num}}">{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD><TD>{{shipping_cost}}</TD>
                         <TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD><TD id="sd{{order_num}}">{{shipping_date}}</TD><TD id="fc{{order_num}}">{{freight_company}}</TD>
                         <TD><button onmouseover="commandeEnvoyee('{{order_num}}', '{{shipping_date}}')" class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
-                        <TD><button class="btn" id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
+                        <TD><button onmouseover="commandeEnvoyee('{{order_num}}', '{{shipping_date}}')" class="btn" id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
