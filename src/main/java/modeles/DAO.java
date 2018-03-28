@@ -458,46 +458,52 @@ public class DAO {
 		return result;
 	}
         
-        public Map<String, Double> salesByZone() throws SQLException {
+        public Map<String, Double> salesByZone(Date debut, Date fin) throws SQLException {
 		Map<String, Double> result = new HashMap<>();
-		String sql = "SELECT CITY, SUM(PURCHASE_COST * QUANTITY) AS SALES" +
-		"	      FROM CUSTOMER c" +
-		"	      INNER JOIN PURCHASE_ORDER o ON (c.CUSTOMER_ID = o.CUSTOMER_ID)" +
-		"	      INNER JOIN PRODUCT p ON (o.PRODUCT_ID = p.PRODUCT_ID)" +
-                "             WHERE SALES_DATE BETWEEN ? AND ? " +
-		"	      GROUP BY CITY";
+		String sql = "SELECT CITY, SUM(PURCHASE_COST * QUANTITY) AS SALES "
+                        + "FROM CUSTOMER "
+                        + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
+                        + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                        + "WHERE SALES_DATE BETWEEN ? AND ? "
+                        + "GROUP BY CITY";
 		try (Connection connection = myDataSource.getConnection(); 
-		     Statement stmt = connection.createStatement(); 
-		     ResultSet rs = stmt.executeQuery(sql)) {
-			while (rs.next()) {
+                        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setDate(1, debut);
+                    pstmt.setDate(2, fin);
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                       while (rs.next()) {
 				// On récupère les champs nécessaires de l'enregistrement courant
-				String city = rs.getString("CITY");
+				String name = rs.getString("CITY");
 				double sales = rs.getDouble("SALES");
 				// On l'ajoute à la liste des résultats
-				result.put(city, sales);
-			}
-		}
+				result.put(name, sales);
+			} 
+                    }
+                }
 		return result;
 	}
         
-         public Map<String, Double> salesByProduct() throws SQLException {
+         public Map<String, Double> salesByProduct(Date debut, Date fin) throws SQLException {
 		Map<String, Double> result = new HashMap<>();
 		String sql = "SELECT PURCHASE_ORDER.PRODUCT_ID, SUM(PURCHASE_COST * QUANTITY) AS SALES" +
 		"	      FROM PURCHASE_ORDER" +
-		"	      INNER JOIN PRODUCT ON (PURCHASE_ORDER.PRODUCT_ID = PRODUCT.PRODUCT_ID)" +
+		"	      INNER JOIN PRODUCT USING(PRODUCT_ID)" +
                 "             WHERE SALES_DATE BETWEEN ? AND ? " +
 		"	      GROUP BY PURCHASE_ORDER.PRODUCT_ID";
 		try (Connection connection = myDataSource.getConnection(); 
-		     Statement stmt = connection.createStatement(); 
-		     ResultSet rs = stmt.executeQuery(sql)) {
-			while (rs.next()) {
+                        PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                    pstmt.setDate(1, debut);
+                    pstmt.setDate(2, fin);
+                    try (ResultSet rs = pstmt.executeQuery()) {
+                       while (rs.next()) {
 				// On récupère les champs nécessaires de l'enregistrement courant
-				String city = rs.getString("CITY");
+				String name = rs.getString("PRODUCT_ID");
 				double sales = rs.getDouble("SALES");
 				// On l'ajoute à la liste des résultats
-				result.put(city, sales);
-			}
-		}
+				result.put(name, sales);
+			} 
+                    }
+                }
 		return result;
 	}
 	

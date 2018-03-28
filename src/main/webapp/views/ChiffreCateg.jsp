@@ -19,7 +19,7 @@
 		function drawChart(dataArray) {
 			var data = google.visualization.arrayToDataTable(dataArray);
 			var options = {
-				title: 'Ventes par client',
+				title: 'Ventes par produit',
 				is3D: true
 			};
 			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -29,7 +29,7 @@
 		// Afficher les ventes par client
 		function doAjax() {
 			$.ajax({
-				url: "salesByCustomer",
+				url: "../salesByProduct",
                                 data: {"datePickerDebut": $("#datePickerDebut").val(), "datePickerFin": $("#datePickerFin").val()},
 				dataType: "json",
 				success: // La fonction qui traite les résultats
@@ -37,9 +37,9 @@
 						// On reformate le résultat comme un tableau
 						var chartData = [];
 						// On met le descriptif des données
-						chartData.push(["Client", "Ventes"]);
-						for(var client in result.records) {
-							chartData.push([client, result.records[client]]);
+						chartData.push(["Produit", "Ventes"]);
+						for(var produit in result.records) {
+							chartData.push([produit, result.records[produit]]);
 						}
 						// On dessine le graphique
 						drawChart(chartData);
@@ -56,7 +56,7 @@
 	</script>
 </head>
     <body>
-        <h1>Chiffre d'affaire par catégorie d'articles</h1>
+        <h1>Chiffre d'affaire par catégorie d'article</h1>
         
         <p>Date de début: <input type="date" id="datePickerDebut" value="2011-05-24"></p>
         <p>Date de fin: <input type="date" id="datePickerFin" value="2018-03-30"></p>

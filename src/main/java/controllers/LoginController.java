@@ -53,7 +53,7 @@ public class LoginController extends HttpServlet {
 		} else { // L'utilisateur est connecté
 			// On choisit la page d'affichage
                         if(userName.equals(Admin))
-                            jspView = "views/ChiffreCateg.jsp";
+                            jspView = "views/index_admin.html";
                         else   
                             jspView = "views/index.html";
 		}
