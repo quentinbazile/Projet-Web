@@ -9,7 +9,7 @@
 	<!-- On charge l'API Google -->
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- On charge le fichier CSS associé -->
-        <link rel="stylesheet" href="<c:url value="views/css/stat.css"/>">
+        <link rel="stylesheet" href="<c:url value="css/stat.css"/>">
 	<script type="text/javascript">
 		google.load("visualization", "1", {packages: ["corechart"]});
 
