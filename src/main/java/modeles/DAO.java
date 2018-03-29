@@ -231,11 +231,12 @@ public class DAO {
 
     public Map<String, Double> salesByProduct(Date debut, Date fin) throws SQLException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT PURCHASE_ORDER.PRODUCT_ID, SUM(PURCHASE_COST * QUANTITY) AS SALES "
+        String sql = "SELECT PRODUCT_CODE.DESCRIPTION, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                 + "FROM PURCHASE_ORDER "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                + "INNER JOIN PRODUCT_CODE ON PRODUCT_CODE.PROD_CODE = PRODUCT.PRODUCT_CODE "
                 + "WHERE SALES_DATE BETWEEN ? AND ? "
-                + "GROUP BY PURCHASE_ORDER.PRODUCT_ID";
+                + "GROUP BY PRODUCT_CODE.DESCRIPTION";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setDate(1, debut);
@@ -243,7 +244,7 @@ public class DAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     // On récupère les champs nécessaires de l'enregistrement courant
-                    String name = rs.getString("PRODUCT_ID");
+                    String name = rs.getString("DESCRIPTION");
                     double sales = rs.getDouble("SALES");
                     // On l'ajoute à la liste des résultats
                     result.put(name, sales);
