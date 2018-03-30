@@ -9,7 +9,8 @@
 	<!-- On charge l'API Google -->
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- On charge le fichier CSS associé -->
-        <link rel="stylesheet" href="<c:url value="css/stat.css"/>">
+        <link rel="stylesheet" href="<c:url value="css/statAdmin.css"/>">
+        <link rel="stylesheet" href="<c:url value="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700"/>">
 	<script type="text/javascript">
 		google.load("visualization", "1", {packages: ["corechart"]});
 
@@ -19,7 +20,6 @@
 		function drawChart(dataArray) {
 			var data = google.visualization.arrayToDataTable(dataArray);
 			var options = {
-				title: 'Ventes par produit',
 				is3D: true
 			};
 			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -56,10 +56,10 @@
 	</script>
 </head>
     <body>
-        <h1>Chiffre d'affaire par catégorie d'article</h1>
+        <h1>Chiffre d'affaire par catégorie d'article</h1><br/>
         
-        <p>Date de début: <input type="date" id="datePickerDebut" value="2011-05-24"></p>
-        <p>Date de fin: <input type="date" id="datePickerFin" value="2018-03-30"></p>
+        <p>Date de début : <input type="date" id="datePickerDebut" value="2011-05-24">
+           Date de fin : <input type="date" id="datePickerFin" value="2018-05-20"></p>
         
         <!-- Le graphique apparaît ici -->
 	<div id="piechart" style="width: 900px; height: 500px;"></div>

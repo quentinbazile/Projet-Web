@@ -1,0 +1,14 @@
+h1{
+    color: silver;
+    font-family: Ubuntu Condensed;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+a{
+    text-decoration: none;
+    font-family: Oswald;
+}
+

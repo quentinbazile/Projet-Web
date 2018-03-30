@@ -1,0 +1,37 @@
+body {
+  background: url("../images/essai1.jpg") no-repeat;
+  background-size: cover;
+  
+}
+
+
+h1, p, input {
+    color: silver;
+    font-family: Oswald;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+rect{
+    fill:  transparent;
+}
+
+
+p{
+    font-weight: bold;
+    font-size: 18px;
+    text-align:center;
+}
+
+div{
+    margin: 0 auto;
+}
+
+text{
+    fill: #BDBDBD;
+}
+
+input{
+    background-color: transparent;
+    border: none;
+}
