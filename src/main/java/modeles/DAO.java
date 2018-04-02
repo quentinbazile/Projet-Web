@@ -253,5 +253,24 @@ public class DAO {
         }
         return result;
     }
+    
+    public List listeCommandesEnvoyees(String userName, Date dateNow) throws SQLException {
+        List result = new LinkedList<>(); // Liste vIde
+        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? AND SALES_DATE < ? ORDER BY SALES_DATE DESC";
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
+            pstmt.setString(1, userName);
+            pstmt.setDate(2, dateNow);
+            try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
+                while (rs.next()) { // Tant qu'il y a des enregistrements
+                    // On récupère les champs nécessaires de l'enregistrement courant
+                    int order_num = rs.getInt("ORDER_NUM");              
+                    // On l'ajoute à la liste des résultats
+                    result.add(order_num);
+                }
+            }
+        }
+        return result;
+    }
 
 }

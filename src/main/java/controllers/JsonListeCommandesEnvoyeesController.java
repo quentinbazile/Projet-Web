@@ -11,6 +11,7 @@ import java.util.Collections;
 
 // bibliothèque Google GSon
 import com.google.gson.*;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -18,8 +19,8 @@ import modeles.DAO;
 import modeles.DataSourceFactory;
 
 
-@WebServlet(name = "listeCommandes", urlPatterns = {"/listeCommandes"})
-public class JsonListeCommandesController extends HttpServlet {
+@WebServlet(name = "listeCommandesEnvoyees", urlPatterns = {"/listeCommandesEnvoyees"})
+public class JsonListeCommandesEnvoyeesController extends HttpServlet {
 
 	/**
 	 * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,7 +38,7 @@ public class JsonListeCommandesController extends HttpServlet {
 
 		Properties resultat = new Properties();
 		try {
-			resultat.put("records", dao.listeCommandes(LoginController.userName));
+			resultat.put("records", dao.listeCommandesEnvoyees(LoginController.userName, new Date(System.currentTimeMillis())));
 		} catch (SQLException ex) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			resultat.put("records", Collections.EMPTY_LIST);

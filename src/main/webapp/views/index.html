@@ -8,7 +8,7 @@
         <!-- On charge le moteur de template mustache https://mustache.github.io/ -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
         <!-- un JS pour les fonctions AJAX et JSON -->
-        <script src="views/js/index.js"></script>
+        <script src="views/js/index2.js"></script>
         <!-- un CSS pour formatter la page web -->
         <link rel="stylesheet" type="text/css" href="views/css/customer.css"> 
     </head>
@@ -66,8 +66,8 @@
                     <TR>
                         <TD>{{order_num}}</TD><TD id="product_id{{order_num}}">{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD><TD>{{shipping_cost}}</TD>
                         <TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD><TD id="sd{{order_num}}">{{shipping_date}}</TD><TD id="fc{{order_num}}">{{freight_company}}</TD>
-                        <TD><button onmouseover="commandeEnvoyee('{{order_num}}', '{{shipping_date}}')" class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
-                        <TD><button onmouseover="commandeEnvoyee('{{order_num}}', '{{shipping_date}}')" class="btn" id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
+                        <TD><button class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
+                        <TD><button class="btn" id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
                     </TR>
                 {{/records}}
             </TABLE>
