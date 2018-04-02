@@ -6,7 +6,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Bienvenue</title>
-        <link rel="stylesheet" href="<c:url value="views/css/connect.css"/>">
+        <link rel="stylesheet" href="<c:url value="views/css/login.css"/>">
         <link rel="stylesheet" href="<c:url value="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700"/>">
     </head>
     <body>
