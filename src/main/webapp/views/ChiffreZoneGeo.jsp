@@ -50,7 +50,7 @@
 		
 		// Fonction qui traite les erreurs de la requête
 		function showError(xhr, status, message) {
-			alert("Erreur: " + status + " : " + message);
+			//alert("Erreur: " + status + " : " + message);
 		}
 
 	</script>
@@ -58,8 +58,8 @@
     <body>
         <h1>Chiffre d'affaire par zone géographique</h1><br/>
         
-        <p>Date de début : <input type="date" id="datePickerDebut" value="2011-05-24">
-           Date de fin : <input type="date" id="datePickerFin" value="2018-05-20"></p>
+        <p>Date de début : <input type="date" id="datePickerDebut" value="2011-05-24" onchange="doAjax()">
+           Date de fin : <input type="date" id="datePickerFin" value="2018-05-20" onchange="doAjax()"></p>
         
         <!-- Le graphique apparaît ici -->
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
