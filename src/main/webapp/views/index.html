@@ -72,28 +72,5 @@
                 {{/records}}
             </TABLE>
         </script></center>
-        <script type="text/javascript">
-            function commandeEnvoyee(order_num, shipping_date){
-                let m = new Array('janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre');
-                let bU = document.getElementById('btnUpdate' + order_num);
-                let bD = document.getElementById('btnDelete' + order_num);
-                let dateNow = new Date();
-                dateNow = new Date(dateNow.getFullYear(), dateNow.getMonth(), dateNow.getDate());
-                let annee = shipping_date.split(" ")[2];
-                let mois = shipping_date.split(" ")[0];
-                let jour = shipping_date.split(" ")[1].split(",")[0];
-                let dateOrder = new Date(annee, m.indexOf(mois), jour);
-                if(dateNow > dateOrder) {
-                    bU.style.background = '#32CC36';
-                    bU.innerHTML = 'Validée';
-                    bU.disabled = true;
-                    bU.style.color = '#5B5F5B';
-                    bD.style.background = '#32CC36';
-                    bD.innerHTML = 'Expédiée';
-                    bD.disabled = true;
-                    bD.style.color = '#5B5F5B';
-                }
-            }                                                                                    
-        </script>
     </body>
 </html>
