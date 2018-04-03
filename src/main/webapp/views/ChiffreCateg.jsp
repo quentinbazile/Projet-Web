@@ -25,6 +25,15 @@
 			var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 			chart.draw(data, options);
 		}
+                
+                function drawHistogram(dataArray) {
+			var data = google.visualization.arrayToDataTable(dataArray);
+			var options = {
+                                colors: ['#EC644B']
+			};
+			var chart = new google.visualization.Histogram(document.getElementById('histogram'));
+			chart.draw(data, options);
+		}
 
 		// Afficher les ventes par client
 		function doAjax() {
@@ -43,6 +52,7 @@
 						}
 						// On dessine le graphique
 						drawChart(chartData);
+                                                drawHistogram(chartData);
 					},
 				error: showError
 			});
@@ -63,5 +73,6 @@
         
         <!-- Le graphique apparaît ici -->
 	<div id="piechart" style="width: 900px; height: 500px;"></div>
+        <div id="histogram" style="width: 725px; height: 450px;"></div>
     </body>
 </html>

@@ -1,9 +1,7 @@
 body {
   background: url("../images/essai1.jpg") no-repeat;
   background-size: cover;
-  
 }
-
 
 h1, p, input {
     color: silver;
@@ -12,19 +10,10 @@ h1, p, input {
     letter-spacing: 2px;
 }
 
-rect{
-    fill:  transparent;
-}
-
-
 p{
     font-weight: bold;
     font-size: 18px;
     text-align:center;
-}
-
-div{
-    margin: 0 auto;
 }
 
 text{
@@ -34,4 +23,12 @@ text{
 input{
     background-color: transparent;
     border: none;
+}
+
+svg > rect{
+    fill:  transparent;
+}
+
+div{
+    display:inline-block;
 }
