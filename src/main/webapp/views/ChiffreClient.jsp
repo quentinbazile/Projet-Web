@@ -68,8 +68,8 @@
     <body>
         <h1>Chiffre d'affaire par client</h1><br/>
         
-        <p>Date de début : <input type="date" id="datePickerDebut" value="2010-01-01" onchange="doAjax()" >
-           Date de fin : <input type="date" id="datePickerFin" value="2019-01-01" onchange="doAjax()"></p>
+        <p>Date de début : <input type="date" id="datePickerDebut" onchange="doAjax()" >
+           Date de fin : <input type="date" id="datePickerFin" onchange="doAjax()"></p>
         
         <!-- Le graphique apparaît ici -->
 	<div id="piechart" style="width: 725px; height: 500px;"></div>
