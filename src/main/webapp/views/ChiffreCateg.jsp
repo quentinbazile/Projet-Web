@@ -70,8 +70,8 @@
         <form action="../" method="POST"> <input type='submit' name='action' value='DECONNEXION'></form>
         <h1>Chiffres d'affaire par catégorie d'article</h1><br/>
         
-        <p>Date de début : <input type="date" id="datePickerDebut" onchange="doAjax()">
-           Date de fin : <input type="date" id="datePickerFin" onchange="doAjax()"></p>
+        <p>Date de début : <input type="date" id="datePickerDebut" onchange="doAjax()" value="2011-01-01">
+           Date de fin : <input type="date" id="datePickerFin" onchange="doAjax()" value="2018-04-20"></p>
         
         <!-- Le graphique apparaît ici -->
 	<div id="piechart" style="width: 725px; height: 500px;"></div>
