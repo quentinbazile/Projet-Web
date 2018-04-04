@@ -67,6 +67,7 @@
 </head>
     <body>
         <input type="button" value="<< RETOUR" onclick="location.href = document.referrer; return false;"></input>
+        <form action="../" method="POST"> <input type='submit' name='action' value='DECONNEXION'></form>
         <h1>Chiffres d'affaire par client</h1><br/>
         
         <p>Date de début : <input type="date" id="datePickerDebut" onchange="doAjax()" >

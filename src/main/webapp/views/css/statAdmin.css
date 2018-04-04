@@ -33,7 +33,7 @@ div{
     display:inline-block;
 }
 
-input[type=button]{
+input[type=button], input[type=submit]{
     background: #585858;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
     font-family: verdana, arial, sans-serif;
@@ -45,6 +45,14 @@ input[type=button]{
     border:none;
 }
 
-input[type=button]:hover{
+input[type=button]:hover, input[type=submit]:hover{
     color: red; 
+}
+
+form{
+    display:inline-block;
+}
+
+input[type=submit]{
+    width:110px;
 }
