@@ -8,7 +8,7 @@
         <!-- On charge le moteur de template mustache https://mustache.github.io/ -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/0.8.1/mustache.min.js"></script>
         <!-- un JS pour les fonctions AJAX et JSON -->
-        <script src="views/js/index2.js"></script>
+        <script src="views/js/index.js"></script>
         <!-- un CSS pour formatter la page web -->
         <link rel="stylesheet" type="text/css" href="views/css/customers.css"> 
     </head>
@@ -24,7 +24,7 @@
         <script id="productsTemplate" type="text/template">
             <TABLE>
                 <tr>
-                    <th>Identifiant</th><th>Prix</th><th>Quantité</th><th>Description</th><th>Nombre</th><th>Compagnie de transport</th><th>Action</th>
+                    <th>Identifiant</th><th>Prix</th><th>Stock</th><th>Description</th><th>Quantité</th><th>Compagnie de transport</th><th>Commander</th>
                 </tr>
                 {{! Pour chaque enregistrement }}
                 {{#records}}
@@ -43,7 +43,7 @@
                                 <option value="Western Fast">Western Fast</option>
                             </select>
                         </TD>
-                        <TD><button onclick="addCommande({{product_id}})">Commander</button></TD>
+                        <TD onclick="addCommande({{product_id}})"><center><img src="views/images/panier.png" style="width: 45%; height: 45%"></center></TD>
                         
                     </TR>
                 {{/records}}
@@ -66,8 +66,8 @@
                     <TR>
                         <TD>{{order_num}}</TD><TD id="product_id{{order_num}}">{{product_id}}</TD><TD id="qte{{order_num}}">{{quantity}}</TD><TD>{{shipping_cost}}</TD>
                         <TD>{{purchase_cost}}</TD><TD>{{sales_date}}</TD><TD id="sd{{order_num}}">{{shipping_date}}</TD><TD id="fc{{order_num}}">{{freight_company}}</TD>
-                        <TD><button class="btn" id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')">Modifier</button>
-                        <TD><button class="btn" id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')">Supprimer</button></TD>
+                        <TD id="btnUpdate{{order_num}}" onclick="paramUpdateCommande('{{order_num}}')" style="width: 80px"><center><img src="views/images/update.png" style="width: 45%; height: 45%"></center></TD>
+                        <TD id="btnDelete{{order_num}}" onclick="deleteCommande('{{order_num}}')" style="width: 80px"><center><img src="views/images/delete.png" style="width: 45%; height: 45%"></center></TD>
                     </TR>
                 {{/records}}
             </TABLE>
