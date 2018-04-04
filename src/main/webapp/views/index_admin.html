@@ -4,12 +4,14 @@
         <title>Bienvenue</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700|Ubuntu+Condensed">
-        <link rel="stylesheet" href="views/css/indexadmin.css">
+        <link rel="stylesheet" href="views/css/index_admin.css">
     </head>
-    <body>
-        <h1>Statistiques</h1>
-        <a href="views/ChiffreClient.jsp">Chiffre d'affaire par client</a>
-        <a href="views/ChiffreZoneGeo.jsp">Chiffre d'affaire par zone géographique</a>
-        <a href="views/ChiffreCateg.jsp">Chiffre d'affaire par catégorie d'article</a>
+    <body><center>
+        <form action="../ProjetWeb/" method="POST"> <input type='submit' name='action' value='DECONNEXION'></form>
+        <h1>Statistiques des Chiffres d'Affaire</h1><br/><br/>
+        <input type="button" onclick='location.href="views/ChiffreClient.jsp"' value=">> Clients <<"><br/><br/><br/><br/>
+        <input type="button" onclick='location.href="views/ChiffreZoneGeo.jsp"' value=">> Zones géographiques <<"><br/><br/><br/><br/>
+        <input type="button" onclick='location.href="views/ChiffreCateg.jsp"' value=">> Catégories d'articles <<">
+    </center>
     </body>
 </html>

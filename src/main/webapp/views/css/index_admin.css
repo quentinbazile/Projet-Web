@@ -1,0 +1,39 @@
+body {
+    background: url("../images/754.jpg") no-repeat fixed;
+    background-size: cover; 
+    margin-top:2%;
+}
+
+h1{
+    color: white;
+    font-family: Ubuntu Condensed;
+    text-align: center;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: 45px;
+}
+
+input[type=button], input[type=submit]{
+    background: #585858;
+    box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold; 
+    height: 40px;
+    cursor:pointer;
+    width : 110px;
+    border:none;
+}
+
+input[type=button]:hover, input[type=submit]:hover{
+    color: red; 
+}
+
+input[type=button]{
+    background: transparent;
+    color: #151515;
+    width:550px;
+    height:120px;
+    font-size: 30px;
+}
+
