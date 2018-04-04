@@ -3,7 +3,7 @@ body {
   background-size: cover;
 }
 
-h1, p, input {
+h1, p, input[type=date] {
     color: silver;
     font-family: Oswald;
     text-align: center;
@@ -20,7 +20,7 @@ text{
     fill: #BDBDBD;
 }
 
-input{
+input[type=date]{
     background-color: transparent;
     border: none;
 }
@@ -31,4 +31,20 @@ svg > rect{
 
 div{
     display:inline-block;
+}
+
+input[type=button]{
+    background: #585858;
+    box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
+    font-family: verdana, arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold; 
+    height: 40px;
+    cursor:pointer;
+    width : 100px;
+    border:none;
+}
+
+input[type=button]:hover{
+    color: red; 
 }
