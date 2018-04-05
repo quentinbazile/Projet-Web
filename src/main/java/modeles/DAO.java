@@ -255,7 +255,7 @@ public class DAO {
     }
     
     public List listeCommandesEnvoyees(String userName, Date dateNow) throws SQLException {
-        List result = new LinkedList<>(); // Liste vIde
+        List result = new LinkedList<>(); // Liste vide
         String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? AND SALES_DATE < ? ORDER BY SALES_DATE DESC";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête

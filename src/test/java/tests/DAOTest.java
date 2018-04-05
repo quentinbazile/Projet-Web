@@ -2,7 +2,10 @@ package tests;
 
 import java.sql.SQLException;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 import javax.sql.DataSource;
 import modeles.DAO;
 import modeles.DAOException;
@@ -62,9 +65,9 @@ public class DAOTest {
      */
     @Test
     public void testListeCommandes() throws SQLException {
-        String userName = "www.bobhostcorp.example.com";
+        String userName = "test@example.com";
         List<PurchaseOrderEntity> result = myDAO.listeCommandes(userName);
-        assertEquals(2, result.size());
+        assertEquals(0, result.size());
     }
     
     /**
@@ -90,7 +93,7 @@ public class DAOTest {
     }
     
     /**
-     * Test of UpdateCommande method fail, of class DAO.
+     * Test of updateCommande method fail, of class DAO.
      * @throws modeles.DAOException
      */
     @Test
@@ -111,4 +114,59 @@ public class DAOTest {
         int order_num = 40000000;
         assertEquals(0, myDAO.deleteCommande(order_num));
     }
+    
+    /**
+     * Test of updateQuantity method, of class DAO.
+     * @throws modeles.DAOException
+     */
+    @Test
+    public void testUpdateQuantity() throws DAOException {
+        int quantity = 0;
+        int product_id = 980001;
+        assertEquals(1, myDAO.updateQuantity(quantity, product_id));
+    }
+    
+    /**
+     * Test of salesByCustomer method, of class DAO.
+     * @throws java.sql.SQLException
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSalesByCustomer() throws SQLException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date debut = new Date(format.parse("2010-01-01").getTime());
+        Date fin = new Date(format.parse("2012-01-01").getTime());
+        Map<String, Double> result = myDAO.salesByCustomer(debut, fin);
+        assertEquals(12, result.size());
+    }
+    
+    /**
+     * Test of salesByZone method, of class DAO.
+     * @throws java.sql.SQLException
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSalesByZone() throws SQLException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date debut = new Date(format.parse("2010-01-01").getTime());
+        Date fin = new Date(format.parse("2012-01-01").getTime());
+        Map<String, Double> result = myDAO.salesByZone(debut, fin);
+        assertEquals(10, result.size());
+    }
+    
+    /**
+     * Test of salesByProduct method, of class DAO.
+     * @throws java.sql.SQLException
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSalesByProduct() throws SQLException, ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date debut = new Date(format.parse("2010-01-01").getTime());
+        Date fin = new Date(format.parse("2012-01-01").getTime());
+        Map<String, Double> result = myDAO.salesByProduct(debut, fin);
+        assertEquals(5, result.size());
+    }
+    
+    
 }
