@@ -25,6 +25,13 @@ public class DAO {
         this.myDataSource = dataSource;
     }
 
+    /**
+     * Vérifie la connexion de l'utilisateur (table : CUSTOMER)
+     * @param login le nom d'utilisateur
+     * @param password le mot de passe de l'utilisateur
+     * @return la validation de la connexion ('true' ou 'false' si login et/ou password est incorrect)
+     * @throws DAOException
+     */
     public boolean checkLogin(String login, int password) throws DAOException {
         boolean result = false;
         String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
@@ -44,6 +51,10 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @return la liste des produits disponibles à l'achat (table : PRODUCT)
+     * @throws SQLException
+     */
     public List<ProductEntity> listeProduits() throws SQLException {
         List<ProductEntity> result = new LinkedList<>(); // Liste vIde
         String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0 ORDER BY PRODUCT_ID";
@@ -69,6 +80,11 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param userName l'email du client
+     * @return la liste des commandes pour ce client (tables : PURCHASE_ORDER, CUSTOMER, PRODUCT)
+     * @throws SQLException
+     */
     public List<PurchaseOrderEntity> listeCommandes(String userName) throws SQLException {
         List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vIde
         String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? ORDER BY SALES_DATE DESC";
@@ -253,7 +269,7 @@ public class DAO {
         }
         return result;
     }
-    
+
     public List listeCommandesEnvoyees(String userName, Date dateNow) throws SQLException {
         List result = new LinkedList<>(); // Liste vide
         String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? AND SALES_DATE < ? ORDER BY SALES_DATE DESC";
@@ -264,7 +280,7 @@ public class DAO {
             try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
                 while (rs.next()) { // Tant qu'il y a des enregistrements
                     // On récupère les champs nécessaires de l'enregistrement courant
-                    int order_num = rs.getInt("ORDER_NUM");              
+                    int order_num = rs.getInt("ORDER_NUM");
                     // On l'ajoute à la liste des résultats
                     result.add(order_num);
                 }
