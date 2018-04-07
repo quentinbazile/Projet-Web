@@ -17,7 +17,10 @@ p{
 }
 
 text{
-    fill: #BDBDBD;
+    /*fill: #BDBDBD;*/
+    font-weight: bold;
+    fill:#F5A9A9;
+    
 }
 
 input[type=date]{

@@ -9,7 +9,7 @@
 	<!-- On charge l'API Google -->
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
         <!-- On charge le fichier CSS associé -->
-        <link rel="stylesheet" href="<c:url value="css/statAdmin.css"/>">
+        <link rel="stylesheet" href="<c:url value="css/statAdmin2.css"/>">
         <link rel="stylesheet" href="<c:url value="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700"/>">
 	<script type="text/javascript">
 		google.load("visualization", "1", {packages: ["corechart"]});
