@@ -26,10 +26,9 @@ public class DAO {
     }
 
     /**
-     * Vérifie la connexion de l'utilisateur (table : CUSTOMER)
      * @param login le nom d'utilisateur
      * @param password le mot de passe de l'utilisateur
-     * @return la validation de la connexion ('true' ou 'false' si login et/ou password est incorrect)
+     * @return la vérification de la connexion de l'utilisateur ('true' ou 'false' si login et/ou password est incorrect) (table : CUSTOMER)
      * @throws DAOException
      */
     public boolean checkLogin(String login, int password) throws DAOException {
@@ -113,6 +112,10 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @return le prochain numéro de commande à créer (table : PURCHASE_ORDER)
+     * @throws DAOException
+     */
     public int orderNum() throws DAOException {
         int result = 0;
         String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
@@ -130,7 +133,19 @@ public class DAO {
         }
         return result;
     }
-
+    
+    /**
+     * @param order_num le numéro de la commande
+     * @param customer_id le numéro de client qui passe la commande
+     * @param product_id la référence produit
+     * @param quantity la quantité à commander
+     * @param shipping_cost les frais de livraison
+     * @param sales_date la date de la commande
+     * @param shipping_date la date d'expédition
+     * @param freight_company la compagnie de transport
+     * @return le nombre d'enregistrements insérés (1 ou 0 si échec) (table : PURCHASE_ORDER)
+     * @throws DAOException
+     */
     public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
         int result = 0;
         String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
@@ -152,6 +167,11 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param order_num la clé de la commande à détruire
+     * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
+     * @throws SQLException
+     */
     public int deleteCommande(int order_num) throws SQLException {
         int result = 0;
         String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
