@@ -151,7 +151,7 @@ public class DAOTest {
         Date debut = new Date(format.parse("2010-01-01").getTime());
         Date fin = new Date(format.parse("2012-01-01").getTime());
         Map<String, Double> result = myDAO.salesByZone(debut, fin);
-        assertEquals(10, result.size());
+        assertEquals(5, result.size());
     }
     
     /**
@@ -166,7 +166,5 @@ public class DAOTest {
         Date fin = new Date(format.parse("2012-01-01").getTime());
         Map<String, Double> result = myDAO.salesByProduct(debut, fin);
         assertEquals(5, result.size());
-    }
-    
-    
+    }  
 }
