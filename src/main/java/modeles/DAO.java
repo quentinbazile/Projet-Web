@@ -124,7 +124,7 @@ public class DAO {
                 ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
                 ) {
             if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-                // On récupère le champ NUMBER de l'enregistrement courant
+                // On récupère le champs nécessaire de l'enregistrement courant
                 result = rs.getInt("ORDER_NUM");
             }
         } catch (SQLException ex) {
@@ -298,8 +298,8 @@ public class DAO {
             pstmt.setString(1, userName);
             pstmt.setDate(2, dateNow);
             try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
-                while (rs.next()) { // Tant qu'il y a des enregistrements
-                    // On récupère les champs nécessaires de l'enregistrement courant
+                if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
+                    // On récupère le champs nécessaire de l'enregistrement courant
                     int order_num = rs.getInt("ORDER_NUM");
                     // On l'ajoute à la liste des résultats
                     result.add(order_num);
