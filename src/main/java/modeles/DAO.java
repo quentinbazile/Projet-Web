@@ -222,12 +222,12 @@ public class DAO {
 
     public Map<String, Double> salesByZone(Date debut, Date fin) throws SQLException {
         Map<String, Double> result = new HashMap<>();
-        String sql = "SELECT CITY, SUM(PURCHASE_COST * QUANTITY) AS SALES "
+        String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                 + "FROM CUSTOMER "
                 + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "WHERE SALES_DATE BETWEEN ? AND ? "
-                + "GROUP BY CITY";
+                + "GROUP BY STATE";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setDate(1, debut);
@@ -235,7 +235,7 @@ public class DAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     // On récupère les champs nécessaires de l'enregistrement courant
-                    String name = rs.getString("CITY");
+                    String name = rs.getString("STATE");
                     double sales = rs.getDouble("SALES");
                     // On l'ajoute à la liste des résultats
                     result.put(name, sales);
