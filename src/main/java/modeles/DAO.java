@@ -298,8 +298,8 @@ public class DAO {
             pstmt.setString(1, userName);
             pstmt.setDate(2, dateNow);
             try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
-                if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
-                    // On récupère le champs nécessaire de l'enregistrement courant
+                while (rs.next()) { 
+                    // On récupère les champs nécessaires de l'enregistrement courant
                     int order_num = rs.getInt("ORDER_NUM");
                     // On l'ajoute à la liste des résultats
                     result.add(order_num);
