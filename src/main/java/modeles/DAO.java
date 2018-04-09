@@ -33,11 +33,12 @@ public class DAO {
      */
     public boolean checkLogin(String login, int password) throws DAOException {
         boolean result = false ; // On n'a pas encore de correspondance
-        String sql = "SELECT * FROM CUSTOMER "  // Une requête SQL paramétrée
-                + "WHERE EMAIL = ? AND CUSTOMER_ID = ?";
+        String sql = "SELECT * FROM CUSTOMER "
+                + "WHERE EMAIL = ? AND CUSTOMER_ID = ?"; // Une requête SQL paramétrée
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 PreparedStatement stmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
-            stmt.setString(1, login); // Définir la valeur des paramètres
+            // Définir la valeur des paramètres
+            stmt.setString(1, login);
             stmt.setInt(2, password);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) { // On a trouvé une correspondance
@@ -61,7 +62,7 @@ public class DAO {
                 + "WHERE QUANTITY_ON_HAND > 0 "
                 + "ORDER BY PRODUCT_ID";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-                Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
+                Statement stmt = connection.createStatement()) { // On crée un Statement pour exécuter une requête
             ResultSet rs = stmt.executeQuery(sql); // Un ResultSet pour parcourir les enregistrements du résultat
             while (rs.next()) { // Tant qu'il y a des enregistrements
                 // On récupère les champs nécessaires de l'enregistrement courant
@@ -88,15 +89,15 @@ public class DAO {
      * @throws SQLException
      */
     public List<PurchaseOrderEntity> listeCommandes(String userName) throws SQLException {
-        List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vIde
+        List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vide
         String sql = "SELECT * FROM PURCHASE_ORDER "
                 + "INNER JOIN CUSTOMER USING(CUSTOMER_ID) "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "WHERE EMAIL = ? "
-                + "ORDER BY SALES_DATE DESC";
+                + "ORDER BY SALES_DATE DESC"; // Une requête SQL paramétrée
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
-            pstmt.setString(1, userName);
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            pstmt.setString(1, userName); // Définir la valeur du paramètre
             try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
                 while (rs.next()) { // Tant qu'il y a des enregistrements
                     // On récupère les champs nécessaires de l'enregistrement courant
@@ -129,10 +130,10 @@ public class DAO {
         String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER "
                 + "WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-                Statement stmt = connection.createStatement(); // On crée un statement pour exécuter une requête
+                Statement stmt = connection.createStatement(); // On crée un Statement pour exécuter une requête
                 ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
                 ) {
-            if (rs.next()) { // Pas la peine de faire while, il y a 1 seul enregistrement
+            if (rs.next()) { // Pas la peine de faire while, il n'y a qu'un seul enregistrement
                 // On récupère le champs nécessaire de l'enregistrement courant
                 result = rs.getInt("ORDER_NUM");
             }
@@ -159,9 +160,10 @@ public class DAO {
             throws DAOException {
         int result = 0;
         String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) "
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setInt(1, order_num);
             pstmt.setInt(2, customer_id);
             pstmt.setInt(3, product_id);
@@ -170,7 +172,7 @@ public class DAO {
             pstmt.setDate(6, sales_date);
             pstmt.setDate(7, shipping_date);
             pstmt.setString(8, freight_company);
-            result = pstmt.executeUpdate();
+            result = pstmt.executeUpdate(); // On exécute l'update du PreparedStatement
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
@@ -186,11 +188,11 @@ public class DAO {
     public int deleteCommande(int order_num) throws SQLException {
         int result = 0;
         String sql = "DELETE FROM PURCHASE_ORDER "
-                + "WHERE ORDER_NUM = ?";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setInt(1, order_num);
-            result = stmt.executeUpdate();
+                + "WHERE ORDER_NUM = ?"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement stmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            stmt.setInt(1, order_num); // On attribue le paramètre au champ de l'enregistrement courant
+            result = stmt.executeUpdate(); // On exécute l'update du PreparedStatement
         }
         return result;
     }
@@ -207,14 +209,15 @@ public class DAO {
         int result = 0;
         String sql = "UPDATE PURCHASE_ORDER "
                 + "SET quantity = ?, freight_company = ?, shipping_cost = ? "
-                + "WHERE order_num = ?";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "WHERE order_num = ?"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setInt(1, quantity);
             pstmt.setString(2, freight_company);
             pstmt.setFloat(3, shipping_cost);
             pstmt.setInt(4, order_num);
-            result = pstmt.executeUpdate();
+            result = pstmt.executeUpdate(); // On exécute l'update du PreparedStatement
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
@@ -232,12 +235,13 @@ public class DAO {
         int result = 0;
         String sql = "UPDATE PRODUCT "
                 + "SET quantity_on_hand = quantity_on_hand - ? "
-                + "WHERE product_id = ?";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "WHERE product_id = ?"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setInt(1, quantity);
             pstmt.setInt(2, product_id);
-            result = pstmt.executeUpdate();
+            result = pstmt.executeUpdate(); // On exécute l'update du PreparedStatement
         } catch (SQLException ex) {
             Logger.getLogger("DAO").log(Level.SEVERE, null, ex);
             throw new DAOException(ex.getMessage());
@@ -252,19 +256,20 @@ public class DAO {
      * @throws SQLException
      */
     public Map<String, Double> salesByCustomer(Date debut, Date fin) throws SQLException {
-        Map<String, Double> result = new HashMap<>();
+        Map<String, Double> result = new HashMap<>(); // HashMap vide
         String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                 + "FROM CUSTOMER "
                 + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "WHERE SALES_DATE BETWEEN ? AND ? "
-                + "GROUP BY NAME";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "GROUP BY NAME"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setDate(1, debut);
             pstmt.setDate(2, fin);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
+                while (rs.next()) { // Tant qu'il y a des enregistrements
                     // On récupère les champs nécessaires de l'enregistrement courant
                     String name = rs.getString("NAME");
                     double sales = rs.getDouble("SALES");
@@ -283,19 +288,20 @@ public class DAO {
      * @throws SQLException
      */
     public Map<String, Double> salesByZone(Date debut, Date fin) throws SQLException {
-        Map<String, Double> result = new HashMap<>();
+        Map<String, Double> result = new HashMap<>(); // HashMap vide
         String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                 + "FROM CUSTOMER "
                 + "INNER JOIN PURCHASE_ORDER USING(CUSTOMER_ID) "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "WHERE SALES_DATE BETWEEN ? AND ? "
-                + "GROUP BY STATE";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "GROUP BY STATE"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setDate(1, debut);
             pstmt.setDate(2, fin);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
+                while (rs.next()) { // Tant qu'il y a des enregistrements
                     // On récupère les champs nécessaires de l'enregistrement courant
                     String name = rs.getString("STATE");
                     double sales = rs.getDouble("SALES");
@@ -314,19 +320,20 @@ public class DAO {
      * @throws SQLException
      */
     public Map<String, Double> salesByProduct(Date debut, Date fin) throws SQLException {
-        Map<String, Double> result = new HashMap<>();
+        Map<String, Double> result = new HashMap<>(); // HashMap vide
         String sql = "SELECT PRODUCT_CODE.DESCRIPTION, SUM(PURCHASE_COST * QUANTITY) AS SALES "
                 + "FROM PURCHASE_ORDER "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "INNER JOIN PRODUCT_CODE ON PRODUCT_CODE.PROD_CODE = PRODUCT.PRODUCT_CODE "
                 + "WHERE SALES_DATE BETWEEN ? AND ? "
-                + "GROUP BY PRODUCT_CODE.DESCRIPTION";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                + "GROUP BY PRODUCT_CODE.DESCRIPTION"; // Une requête SQL paramétrée
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setDate(1, debut);
             pstmt.setDate(2, fin);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
+            try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
+                while (rs.next()) { // Tant qu'il y a des enregistrements
                     // On récupère les champs nécessaires de l'enregistrement courant
                     String name = rs.getString("DESCRIPTION");
                     double sales = rs.getDouble("SALES");
@@ -350,14 +357,15 @@ public class DAO {
                 + "INNER JOIN CUSTOMER USING(CUSTOMER_ID) "
                 + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
                 + "WHERE EMAIL = ? AND SALES_DATE < ? "
-                + "ORDER BY SALES_DATE DESC";
+                + "ORDER BY SALES_DATE DESC"; // Une requête SQL paramétrée
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
-                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
+                PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            // On attribue les paramètres aux champs de l'enregistrement courant
             pstmt.setString(1, userName);
             pstmt.setDate(2, dateNow);
             try (ResultSet rs = pstmt.executeQuery()) { // Un ResultSet pour parcourir les enregistrements du résultat
-                while (rs.next()) { 
-                    // On récupère les champs nécessaires de l'enregistrement courant
+                while (rs.next()) { // Tant qu'il y a des enregistrements
+                    // On récupère le champ nécessaire de l'enregistrement courant
                     int order_num = rs.getInt("ORDER_NUM");
                     // On l'ajoute à la liste des résultats
                     result.add(order_num);
