@@ -32,14 +32,15 @@ public class DAO {
      * @throws DAOException
      */
     public boolean checkLogin(String login, int password) throws DAOException {
-        boolean result = false;
-        String sql = "SELECT * FROM CUSTOMER WHERE EMAIL = ? AND CUSTOMER_ID = ?";
-        try (Connection connection = myDataSource.getConnection();
-                PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, login);
+        boolean result = false ; // On n'a pas encore de correspondance
+        String sql = "SELECT * FROM CUSTOMER "  // Une requête SQL paramétrée
+                + "WHERE EMAIL = ? AND CUSTOMER_ID = ?";
+        try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
+                PreparedStatement stmt = connection.prepareStatement(sql)) { // On crée un PreparedStatement pour exécuter la requête paramétrée
+            stmt.setString(1, login); // Définir la valeur des paramètres
             stmt.setInt(2, password);
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
+                if (rs.next()) { // On a trouvé une correspondance
                     result = true;
                 }
             }
@@ -55,8 +56,10 @@ public class DAO {
      * @throws SQLException
      */
     public List<ProductEntity> listeProduits() throws SQLException {
-        List<ProductEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PRODUCT WHERE QUANTITY_ON_HAND > 0 ORDER BY PRODUCT_ID";
+        List<ProductEntity> result = new LinkedList<>(); // Liste vide
+        String sql = "SELECT * FROM PRODUCT "
+                + "WHERE QUANTITY_ON_HAND > 0 "
+                + "ORDER BY PRODUCT_ID";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 Statement stmt = connection.createStatement()) { // On crée un statement pour exécuter une requête
             ResultSet rs = stmt.executeQuery(sql); // Un ResultSet pour parcourir les enregistrements du résultat
@@ -86,7 +89,11 @@ public class DAO {
      */
     public List<PurchaseOrderEntity> listeCommandes(String userName) throws SQLException {
         List<PurchaseOrderEntity> result = new LinkedList<>(); // Liste vIde
-        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? ORDER BY SALES_DATE DESC";
+        String sql = "SELECT * FROM PURCHASE_ORDER "
+                + "INNER JOIN CUSTOMER USING(CUSTOMER_ID) "
+                + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                + "WHERE EMAIL = ? "
+                + "ORDER BY SALES_DATE DESC";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
             pstmt.setString(1, userName);
@@ -103,7 +110,8 @@ public class DAO {
                     int product_id = rs.getInt("PRODUCT_ID");
                     float purchase_cost = rs.getFloat("PURCHASE_COST") * quantity + shipping_cost;
                     // On crée l'objet entité
-                    PurchaseOrderEntity o = new PurchaseOrderEntity(order_num, quantity, shipping_cost, sales_date, shipping_date, freight_company, customer_id, product_id, purchase_cost);
+                    PurchaseOrderEntity o = new PurchaseOrderEntity(order_num, quantity, shipping_cost, sales_date, shipping_date, 
+                            freight_company, customer_id, product_id, purchase_cost);
                     // On l'ajoute à la liste des résultats
                     result.add(o);
                 }
@@ -118,7 +126,8 @@ public class DAO {
      */
     public int orderNum() throws DAOException {
         int result = 0;
-        String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
+        String sql = "SELECT ORDER_NUM FROM PURCHASE_ORDER "
+                + "WHERE ORDER_NUM = (SELECT MAX(ORDER_NUM) FROM PURCHASE_ORDER)";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 Statement stmt = connection.createStatement(); // On crée un statement pour exécuter une requête
                 ResultSet rs = stmt.executeQuery(sql) // Un ResultSet pour parcourir les enregistrements du résultat
@@ -146,9 +155,11 @@ public class DAO {
      * @return le nombre d'enregistrements insérés (1 ou 0 si échec) (table : PURCHASE_ORDER)
      * @throws DAOException
      */
-    public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) throws DAOException {
+    public int ajoutCommande(int order_num, int customer_id, int product_id, int quantity, float shipping_cost, Date sales_date, Date shipping_date, String freight_company) 
+            throws DAOException {
         int result = 0;
-        String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO PURCHASE_ORDER(order_num, customer_id, product_id, quantity, shipping_cost, sales_date, shipping_date, freight_company) "
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, order_num);
@@ -169,12 +180,13 @@ public class DAO {
 
     /**
      * @param order_num la clé de la commande à détruire
-     * @return le nombre d'enregistrements détruits (1 ou 0 si pas trouvé)
+     * @return le nombre d'enregistrements détruits (1 ou 0 si non trouvé) (table : PURCHASE_ORDER)
      * @throws SQLException
      */
     public int deleteCommande(int order_num) throws SQLException {
         int result = 0;
-        String sql = "DELETE FROM PURCHASE_ORDER WHERE ORDER_NUM = ?";
+        String sql = "DELETE FROM PURCHASE_ORDER "
+                + "WHERE ORDER_NUM = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, order_num);
@@ -183,9 +195,19 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param quantity la nouvelle quantité
+     * @param freight_company la nouvelle compagnie de transport
+     * @param shipping_cost les nouveaux frais de port
+     * @param order_num la clé de la commande à modifier
+     * @return l'enregistrement modifié (1 ou 0 si non trouvé) (table : PURCHASE_ORDER)
+     * @throws DAOException
+     */
     public int updateCommande(int quantity, String freight_company, float shipping_cost, int order_num) throws DAOException {
         int result = 0;
-        String sql = "UPDATE PURCHASE_ORDER SET quantity = ?, freight_company = ?, shipping_cost = ? WHERE order_num = ?";
+        String sql = "UPDATE PURCHASE_ORDER "
+                + "SET quantity = ?, freight_company = ?, shipping_cost = ? "
+                + "WHERE order_num = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, quantity);
@@ -200,9 +222,17 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param quantity la nouvelle quantité choisie
+     * @param product_id la clé du produit à modifier
+     * @return l'enregistrement modifié (1 ou 0 si non trouvé) (table : PRODUCT)
+     * @throws DAOException
+     */
     public int updateQuantity(int quantity, int product_id) throws DAOException {
         int result = 0;
-        String sql = "UPDATE PRODUCT SET quantity_on_hand = quantity_on_hand - ? WHERE product_id = ?";
+        String sql = "UPDATE PRODUCT "
+                + "SET quantity_on_hand = quantity_on_hand - ? "
+                + "WHERE product_id = ?";
         try (Connection connection = myDataSource.getConnection();
                 PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, quantity);
@@ -215,6 +245,12 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param debut la date de départ de la période des ventes par client
+     * @param fin la date de fin de la période des ventes par client
+     * @return la liste des chiffres d'affaire des ventes par client durant la période choisie (tables : CUSTOMER, PURCHASE_ORDER, PRODUCT)
+     * @throws SQLException
+     */
     public Map<String, Double> salesByCustomer(Date debut, Date fin) throws SQLException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT NAME, SUM(PURCHASE_COST * QUANTITY) AS SALES "
@@ -240,6 +276,12 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param debut la date de départ de la période des ventes par zone géographique
+     * @param fin la date de fin de la période des ventes par zone géographique
+     * @return la liste des chiffres d'affaire des ventes par zone géographique durant la période choisie (tables : CUSTOMER, PURCHASE_ORDER, PRODUCT)
+     * @throws SQLException
+     */
     public Map<String, Double> salesByZone(Date debut, Date fin) throws SQLException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT STATE, SUM(PURCHASE_COST * QUANTITY) AS SALES "
@@ -265,6 +307,12 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param debut la date de départ de la période des ventes par catégorie d'articles
+     * @param fin la date de fin de la période des ventes par catégorie d'articles
+     * @return la liste des chiffres d'affaire des ventes par catégorie d'articles durant la période choisie (tables : PRODUCT_CODE, PURCHASE_ORDER, PRODUCT)
+     * @throws SQLException
+     */
     public Map<String, Double> salesByProduct(Date debut, Date fin) throws SQLException {
         Map<String, Double> result = new HashMap<>();
         String sql = "SELECT PRODUCT_CODE.DESCRIPTION, SUM(PURCHASE_COST * QUANTITY) AS SALES "
@@ -290,9 +338,19 @@ public class DAO {
         return result;
     }
 
+    /**
+     * @param userName l'email du client
+     * @param dateNow la date du jour
+     * @return la liste des commandes déjà envoyées pour ce client (tables : CUSTOMER, PURCHASE_ORDER, PRODUCT)
+     * @throws SQLException
+     */
     public List listeCommandesEnvoyees(String userName, Date dateNow) throws SQLException {
         List result = new LinkedList<>(); // Liste vide
-        String sql = "SELECT * FROM PURCHASE_ORDER INNER JOIN CUSTOMER USING(CUSTOMER_ID) INNER JOIN PRODUCT USING(PRODUCT_ID) WHERE EMAIL = ? AND SALES_DATE < ? ORDER BY SALES_DATE DESC";
+        String sql = "SELECT * FROM PURCHASE_ORDER "
+                + "INNER JOIN CUSTOMER USING(CUSTOMER_ID) "
+                + "INNER JOIN PRODUCT USING(PRODUCT_ID) "
+                + "WHERE EMAIL = ? AND SALES_DATE < ? "
+                + "ORDER BY SALES_DATE DESC";
         try (Connection connection = myDataSource.getConnection(); // Ouvrir une connexion
                 PreparedStatement pstmt = connection.prepareStatement(sql)) { // On crée un statement pour exécuter une requête
             pstmt.setString(1, userName);
@@ -308,5 +366,4 @@ public class DAO {
         }
         return result;
     }
-
 }
