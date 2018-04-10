@@ -74,7 +74,7 @@
            Date de fin : <input type="date" id="datePickerFin" onchange="doAjax()" value="2018-04-20"></p>
         
         <!-- Le graphique apparaît ici -->
-	<div id="piechart" style="width: 725px; height: 500px;"></div>
-        <div id="histogram" style="width: 725px; height: 450px;"></div>
+	<div id="piechart" style="width: 660px; height: 500px;"></div>
+        <div id="histogram" style="width: 600px; height: 450px;"></div>
     </body>
 </html>
