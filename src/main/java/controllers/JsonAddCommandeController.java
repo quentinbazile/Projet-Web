@@ -31,6 +31,7 @@ public class JsonAddCommandeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, DAOException {
 
+        // Créér le DAO avec sa source de données
         DAO dao = new DAO(DataSourceFactory.getDataSource());
 
         // On récupère les paramètres saisis par le client
