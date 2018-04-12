@@ -3,7 +3,7 @@
     <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
-        <!-- Les identifiants pour se connecter -->
+        <!-- Les identifiants de l'administrateur pour se connecter -->
         <init-param>
             <param-name>login</param-name>
             <param-value>root</param-value>

@@ -3,12 +3,16 @@
     <head>
         <title>Bienvenue</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- On charge les polices Google -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:400,500|Roboto:300,400,500,700|Ubuntu+Condensed">
+        <!-- un CSS pour formatter la page web -->
         <link rel="stylesheet" href="views/css/index_admin2.css">
     </head>
     <body><center>
+        <!-- Le bouton Déconnexion -->
         <form action="../ProjetWeb/" method="POST"> <input type='submit' name='action' value='DECONNEXION'></form>
         <h1>Statistiques des Chiffres d'Affaire</h1><br/><br/>
+        <!-- Les boutons de redirection vers les différents chiffres d'affaire -->
         <input type="button" onclick='location.href="views/ChiffreClient.jsp"' value=">> Clients <<"><br/><br/><br/><br/>
         <input type="button" onclick='location.href="views/ChiffreZoneGeo.jsp"' value=">> Zones géographiques <<"><br/><br/><br/><br/>
         <input type="button" onclick='location.href="views/ChiffreCateg.jsp"' value=">> Catégories d'articles <<">
