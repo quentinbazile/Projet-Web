@@ -14,7 +14,7 @@
             <img src="<c:url value="views/images/lock.png"/>" class="lock">
             <h2>Connectez-vous</h2>
             <form action="<c:url value="/" />" method="POST">
-                <p>Adresse email</p>
+                <p>Nom d'utilisateur</p>
                 <input type='text' name='loginParam' required>
                 <p>Mot de passe</p>
                 <input type='password' name='passwordParam' required>

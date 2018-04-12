@@ -5,8 +5,8 @@ body {
 }
 
 table {
-    font-family: verdana, arial, sans-serif;
-    font-size: 11px;
+    font-family: 'Roboto';
+    font-size: 14px;
     font-weight: bold;
     color: #333333;
     border-width: 1px;
@@ -25,7 +25,7 @@ th, td {
 }
 
 th {
-    font-size: 13px;
+    font-size: 15px;
     background-color: rgba(255, 255, 255, .75);
 }
 
@@ -49,8 +49,8 @@ td:hover{
 }
 
 h1 {
-    font-family: verdana, arial, sans-serif;
-    font-size: 29px;
+    font-family: 'Roboto';
+    font-size: 32px;
     color: white;
     text-shadow: 3px 3px #1C1C1C;
 }
@@ -62,8 +62,8 @@ h1 {
 button{
     background: #D0A9F5;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
-    font-family: verdana, arial, sans-serif;
-    font-size: 11px;
+    font-family: 'Roboto';
+    font-size: 14px;
     font-weight: bold; 
     height: 25px;
     cursor:pointer;
@@ -76,17 +76,18 @@ button:hover{
 input[type=submit]{
     background: #585858;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
-    font-family: verdana, arial, sans-serif;
-    font-size: 11px;
+    font-family: 'Roboto';
+    font-size: 14px;
     font-weight: bold; 
     height: 40px;
     cursor:pointer;
     border:none;
     width:110px;
+    color:silver;
 }
 
 input[type=submit]:hover{
-    color: red; 
+    color: white; 
 }
 
 .btn, .qte, .fc{
@@ -109,7 +110,7 @@ input[type=submit]:hover{
     display: inline-block;
     appearance:none;
     cursor:pointer;
-    font-family: verdana, arial, sans-serif;
-    font-size: 11px;
+    font-family: 'Roboto';
+    font-size: 14px;
     font-weight: bold; 
 }

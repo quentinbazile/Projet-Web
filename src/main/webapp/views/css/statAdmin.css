@@ -8,11 +8,16 @@ h1, p, input[type=date] {
     font-family: Oswald;
     text-align: center;
     letter-spacing: 2px;
+    font-size: 17px;
+}
+
+h1{
+    font-size: 38px;
 }
 
 p{
     font-weight: bold;
-    font-size: 18px;
+    font-size: 20px;
     text-align:center;
 }
 
@@ -46,10 +51,11 @@ input[type=button], input[type=submit]{
     cursor:pointer;
     width : 100px;
     border:none;
+    color:silver;
 }
 
 input[type=button]:hover, input[type=submit]:hover{
-    color: red; 
+    color: white; 
 }
 
 form{

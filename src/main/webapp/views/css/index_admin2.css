@@ -23,10 +23,15 @@ input[type=button], input[type=submit]{
     cursor:pointer;
     width : 110px;
     border:none;
+    color:silver;
 }
 
 input[type=button]:hover, input[type=submit]:hover{
-    color: red; 
+    color: white; 
+}
+
+input[type=button]:hover{
+    background: rgba(184, 137, 44, 0.4);
 }
 
 input[type=button]{
