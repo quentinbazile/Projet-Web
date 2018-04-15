@@ -1,8 +1,10 @@
+/* Permet de supprimer le fond blanc lors du remplissage automatique */
 input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus {
     -webkit-text-fill-color: #fff;
     transition: background-color 5000s ease-in-out 0s;
 }
 
+/* Permet de centrer tous les élements du body et de définir l'image de fond du site web */
 body {
   margin: 0;
   padding: 0;
@@ -10,6 +12,7 @@ body {
   background: url("../images/bg4.jpg");
 }
 
+/* Permet de réaliser la loginBox */
 .loginBox {
   position: absolute;
   top: 52.5%;
@@ -22,6 +25,7 @@ body {
   background: rgba(0, 0, 0, .7);
 }
 
+/* Permet de modifier l'image cadenas' */
 .lock {
   width: 100px;
   height: 100px;
@@ -32,6 +36,7 @@ body {
   left: calc(50% - 50px);
 }
 
+/* Permet de modifier les titres de niveau h2 */
 h2 {
   font-family: 'Roboto';
   margin: 0;
@@ -40,6 +45,7 @@ h2 {
   text-align: center;
 }
 
+/* Permet de modifier les paragraphes */
 .loginBox p {
   margin: 0;
   padding: 0;
@@ -48,11 +54,13 @@ h2 {
   letter-spacing: 2px;
 }
 
+/* Permet de modifier les inputs */
 .loginBox input {
   width: 100%;
   margin-bottom: 20px;
 }
 
+/* Permet de modifier les inputs text et password */
 .loginBox input[type="text"], .loginBox input[type="password"] {
   border: none;
   border-bottom: 1px solid #fff;
@@ -63,10 +71,12 @@ h2 {
   font-size: 16px;
 }
 
+/* Permet de modifier le placeholder */
 ::placeholder {
   color: rgba(255, 255, 255, .5);
 }
 
+/* Permet de modifier les inputs submit */
 .loginBox input[type="submit"] {
   border: none;
   outline: none;
@@ -78,11 +88,13 @@ h2 {
   border-radius: 20px;
 }
 
+/* Permet de modifier les inputs submit au survol de la souris */
 .loginBox input[type="submit"]:hover {
   background: #EC2929;
   color: silver;
 }
 
+/* Permet de modifier les liens */
 .loginBox a {
   color: #fff;
   font-size: 14px;
