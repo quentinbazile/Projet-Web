@@ -6,6 +6,7 @@ $(document).ready(// Exécuté à la fin du chargement de la page
         }
 );
 
+// Montrer la liste des produits disponibles à l'achat
 function showProducts() {
     // On fait un appel AJAX pour chercher les produits
     $.ajax({
@@ -18,12 +19,13 @@ function showProducts() {
                     var template = $('#productsTemplate').html();
                     // On combine le template avec le résultat de la requête
                     var processedTemplate = Mustache.to_html(template, result);
-                    // On affiche la liste des options dans le select
+                    // On affiche la liste des produits
                     $('#products').html(processedTemplate);
                 }
     });
 }
 
+// Montrer les commandes effectuées
 function showOrders() {
     // On fait un appel AJAX pour chercher les commandes
     $.ajax({
@@ -36,8 +38,9 @@ function showOrders() {
                     var template = $('#ordersTemplate').html();
                     // On combine le template avec le résultat de la requête
                     var processedTemplate = Mustache.to_html(template, result);
-                    // On affiche la liste des options dans le select
+                    // On affiche la liste des commandes
                     $('#orders').html(processedTemplate);
+                    // On vérifie les commandes
                     checkOrders();
                 }
     });
@@ -51,8 +54,8 @@ function addCommande(product_id) {
         dataType: "json",
         success: // La fonction qui traite les résultats
                 function (result) {
+                    // MaJ AJAX des produits et commandes
                     showOrders();
-                    console.log(result);
                     showProducts();
                 },
         error: showError
@@ -68,8 +71,8 @@ function updateCommande(order_num, newQte, fc) {
         dataType: "json",
         success:
                 function (result) {
+                    // MaJ AJAX des produits et commandes
                     showOrders();
-                    console.log(result);
                     showProducts();
                 },
         error: showError
@@ -78,13 +81,17 @@ function updateCommande(order_num, newQte, fc) {
 }
 
 function paramUpdateCommande(order_num) {
+    // Si le client décide de modifier une de ses commandes
     if (document.getElementById("btnUpdate" + order_num).innerHTML === '<center><img src="views/images/update.png" style="width: 45%; height: 45%"></center>') {
+        // Le bouton devient un bouton de validation pour valider ses changements
         document.getElementById("btnUpdate" + order_num).innerHTML = '<center><img src="views/images/validate.png" style="width: 45%; height: 45%"></center>';
         let qte = document.getElementById("qte" + order_num).innerHTML;
         let product_id = document.getElementById("product_id" + order_num).innerHTML;
         let qteMax = document.getElementById("qteMax" + product_id).innerHTML;
+        // Créer un input pour que le client modifie la quantité du produit commandé
         document.getElementById("qte" + order_num).innerHTML = '<input id="newQte' + order_num + '" class="qte" name="' + qte + '" value="' + qte + '" type="number" step="1" min="1" max="' + qteMax + '">';
         let fc = document.getElementById("fc" + order_num).innerHTML;
+        // Permet de modifier la compagnie de transport
         document.getElementById("fc" + order_num).innerHTML =
                 '<select class="fc" id="newFc' + order_num + '">\n\
                     <option value="Coastal Freight">Coastal Freight</option>\n\
@@ -96,10 +103,16 @@ function paramUpdateCommande(order_num) {
                     <option value="Western Fast">Western Fast</option>\n\
                 </select>';
         document.getElementById("newFc" + order_num).value = fc;
-    } else {
+    } 
+    // Le client valide son édition
+    else {
+        // Le bouton de validation redevient un bouton de modification
         document.getElementById("btnUpdate" + order_num).innerHTML = '<center><img src="views/images/update.png" style="width: 45%; height: 45%"></center>';
+        // Nouvelle quantité
         let newQte = document.getElementById("newQte" + order_num).value;
+        // Nouvelle compagnie de transport
         let newFc = document.getElementById("newFc" + order_num).value;
+        // Exécute la fonction permettant la MaJ de la commande
         updateCommande(order_num, newQte, newFc);
     }
 }
@@ -112,8 +125,8 @@ function deleteCommande(order_num) {
         dataType: "json",
         success:
                 function (result) {
+                    // MaJ AJAX des produits et commandes
                     showOrders();
-                    console.log(result);
                     showProducts();
                 },
         error: showError
@@ -121,6 +134,7 @@ function deleteCommande(order_num) {
     return false;
 }
 
+// Vérifie les commandes déjà envoyées
 function checkOrders() {
     // On fait un appel AJAX pour chercher les commandes
     $.ajax({
@@ -129,24 +143,18 @@ function checkOrders() {
         error: showError,
         success: // La fonction qui traite les résultats
                 function (result) {
-                    console.log(result);
-                    console.log(result.records.length);
-                    for (let i = 0; i < result.records.length; i++) {
+                    for (let i = 0; i < result.records.length; i++) { // Pour chaque commande déjà expédiée
                         let order_num = result.records[i];
                         let bU = document.getElementById('btnUpdate' + order_num);
                         let bD = document.getElementById('btnDelete' + order_num);
-                        //bU.style.background = '#32CC36';
-                        //bU.innerHTML = 'Validée';
+                        // Valide la commande
                         bU.innerHTML = '<center><img src="views/images/validate.png" style="width: 45%; height: 45%"></center>';
+                        // Désactive sa modification
                         bU.onclick = null;
-                        //bU.disabled = true;
-                        //bU.style.color = '#5B5F5B';
-                        //bD.style.background = '#32CC36';
-                        //bD.innerHTML = 'Expédiée';
+                        // Indique que la commande est expédiée
                         bD.innerHTML = '<center><img src="views/images/exp.png" style="width: 55%; height: 55%"></center>';
+                        // Désactive sa suppression
                         bD.onclick = null;
-                        //bD.disabled = true;
-                        //bD.style.color = '#5B5F5B';
                     }
                 }
     });
