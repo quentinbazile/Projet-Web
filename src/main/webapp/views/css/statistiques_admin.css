@@ -1,8 +1,10 @@
+/* Permet de définir l'image de fond de la page */
 body {
-  background: url("../images/essai1.jpg") no-repeat;
+  background: url("../images/bg_statistiques.jpg") no-repeat;
   background-size: cover;
 }
 
+/* Permet de modifier les titres de niveau h1, les paragraphes et les inputs date */
 h1, p, input[type=date] {
     color: silver;
     font-family: Oswald;
@@ -11,35 +13,42 @@ h1, p, input[type=date] {
     font-size: 17px;
 }
 
+/* Permet de modifier les titres de niveau h1 */
 h1{
     font-size: 38px;
 }
 
+/* Permet de modifier les paragraphes */
 p{
     font-weight: bold;
     font-size: 20px;
     text-align:center;
 }
 
+/* Permet de modifier les balises "text" */
 text{
     font-weight: bold;
     fill:#F5A9A9;
     
 }
 
+/* Permet de modifier les inputs date */
 input[type=date]{
     background-color: transparent;
     border: none;
 }
 
+/* Permet de modifier les balises "rect" qui se trouvent à l'intérieur des balises "svg" */
 svg > rect{
     fill:  transparent;
 }
 
+/* Permet de modifier les div */
 div{
     display:inline-block;
 }
 
+/* Permet de modifier les inputs button et submit */
 input[type=button], input[type=submit]{
     background: #585858;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
@@ -53,14 +62,17 @@ input[type=button], input[type=submit]{
     color:silver;
 }
 
+/* Permet de modifier les inputs button et submit au survol de la souris */
 input[type=button]:hover, input[type=submit]:hover{
     color: white; 
 }
 
+/* Permet de modifier le formulaire */
 form{
     display:inline-block;
 }
 
+/* Permet de modifier les inputs submit */
 input[type=submit]{
     width:110px;
 }

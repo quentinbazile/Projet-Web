@@ -4,12 +4,12 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
     transition: background-color 5000s ease-in-out 0s;
 }
 
-/* Permet de centrer tous les élements du body et de définir l'image de fond du site web */
+/* Permet de centrer tous les élements du body et de définir l'image de fond de la page */
 body {
   margin: 0;
   padding: 0;
   background-size: cover;
-  background: url("../images/bg4.jpg");
+  background: url("../images/bg_login.jpg");
 }
 
 /* Permet de réaliser la loginBox */

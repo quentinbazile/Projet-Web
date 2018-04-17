@@ -1,9 +1,11 @@
+/* Permet de définir l'image de fond de la page */
 body {
-    background: url("../images/754.jpg") no-repeat fixed;
+    background: url("../images/bg_index.jpg") no-repeat fixed;
     background-size: cover; 
     margin-top:2%;
 }
 
+/* Permet de modifier les tables */
 table {
     font-family: 'Roboto';
     font-size: 14px;
@@ -16,6 +18,7 @@ table {
     z-index: 1;
 }
 
+/* Permet de modifier les cellules et en-têtes des tableaux */
 th, td {
     border: 1px solid #666666;
     padding: 8px;
@@ -24,15 +27,18 @@ th, td {
     background-color: rgba(255, 255, 255, .5);
 }
 
+/* Permet de modifier les en-têtes des tableaux */
 th {
     font-size: 15px;
     background-color: rgba(255, 255, 255, .75);
 }
 
+/* Permet de modifier les lignes des tableaux au survol de la souris */
 tr:hover{
     background-color: #F5BCA9;
 }
 
+/* Permet de modifier les cellules des tableaux après le survol de la souris */
 td:hover::after { 
     background-color: #F5BCA9;
     content: '\00a0';  
@@ -44,10 +50,12 @@ td:hover::after {
     z-index: -1;        
 }
 
+/* Permet de modifier les cellules des tableaux au survol de la souris */
 td:hover{
     background-color: #F5A9A9;
 }
 
+/* Permet de modifier les titres de niveau h1 */
 h1 {
     font-family: 'Roboto';
     font-size: 32px;
@@ -55,10 +63,12 @@ h1 {
     text-shadow: 3px 3px #1C1C1C;
 }
 
+/* Permet de modifier l'élément qui a pour id "orders" */
 #orders{
     margin-bottom: 8%;
 }
 
+/* Permet de modifier les buttons */
 button{
     background: #D0A9F5;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
@@ -69,10 +79,13 @@ button{
     cursor:pointer;
     border:none;
 }
+
+/* Permet de modifier les buttons au survol de la souris */
 button:hover{
     color: white; 
 }
 
+/* Permet de modifier les inputs submit */
 input[type=submit]{
     background: #585858;
     box-shadow: 10px 10px 7px 0px rgba(0,0,0,0.52);
@@ -86,19 +99,23 @@ input[type=submit]{
     color:silver;
 }
 
+/* Permet de modifier les inputs submit au survol de la souris */
 input[type=submit]:hover{
     color: white; 
 }
 
+/* Permet de modifier les class "btn", "qte" et "fc" */
 .btn, .qte, .fc{
     margin-top: 1px;
     margin-bottom: 1px;
 }
 
+/* Permet de modifier la class "qte" */
 .qte{
     width: 50px;
 }
 
+/* Permet de modifier les class "fc", "qte" et "fc option" */
 .fc, .fc option, .qte {
     padding:3px;
     border-radius:4px;

@@ -54,7 +54,7 @@ public class LoginController extends HttpServlet {
             if (userName.equals(Admin)) {
                 jspView = "views/index_admin.html";
             } else {
-                jspView = "views/index.html";
+                jspView = "views/index_client.html";
             }
         }
         // On va vers la page choisie
