@@ -28,8 +28,7 @@ p{
 /* Permet de modifier les balises "text" */
 text{
     font-weight: bold;
-    fill:#F5A9A9;
-    
+    fill:#F5A9A9;  
 }
 
 /* Permet de modifier les inputs date */
