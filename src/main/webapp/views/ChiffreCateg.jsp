@@ -73,7 +73,7 @@
         <input type="button" value="<< RETOUR" onclick="location.href = document.referrer; return false;">
         <!-- Le bouton Déconnexion -->
         <form action="../" method="POST"> <input type='submit' name='action' value='DECONNEXION'></form>
-        <h1>Chiffres d'affaire par catégorie d'article</h1><br/>
+        <h1>Chiffre d'affaires par catégorie d'article</h1><br/>
 
         <!-- La période sur laquelle porte la statistique -->
         <p>Date de début : <input type="date" id="datePickerDebut" onchange="doAjax()" value="2011-01-01">
